@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4017,22 +4018,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629edfee13d1a004eb382e81e808547a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableEscapeHide: 0
+  enableEscapeClose: 1
   editMode: 0
-  showTrigger: 
-  showSpeed: 1
-  hideTrigger: 
-  hideSpeed: 1
-  onBeginOpen:
+  openTrigger: Size Up
+  closeTrigger: Size Down
+  onOpening:
     m_PersistentCalls:
       m_Calls: []
-  onEndOpen:
+  onOpened:
     m_PersistentCalls:
       m_Calls: []
-  onBeginHide:
+  onClosing:
     m_PersistentCalls:
       m_Calls: []
-  onEndHide:
+  onClosed:
     m_PersistentCalls:
       m_Calls: []
   eventsShow: 0

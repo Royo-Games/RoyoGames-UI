@@ -4,9 +4,6 @@
   "displayName": "Royo Games UI",
   "description": "Royo Games UI Package",
   "unity": "2022.3",
-  "dependencies": {
-    "com.royogames.core": "git+https://github.com/Royo-Games/RoyoGames-Core.git"
-  },
   "author": {
     "name": "Royo Games",
     "email": "royogames2020@gmail.com",

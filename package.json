@@ -5,7 +5,7 @@
   "description": "Royo Games UI Package",
   "unity": "2022.3",
   "dependencies": {
-    "com.royogames.core": "https://github.com/Royo-Games/RoyoGames-Core.git#v0.0.1"
+    "com.royogames.core": "https://github.com/Royo-Games/RoyoGames-Core.git#0.0.1"
   },
   "author": {
     "name": "Royo Games",

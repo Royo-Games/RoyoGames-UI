@@ -4,6 +4,16 @@
   "displayName": "Royo Games UI",
   "description": "Royo Games UI Package",
   "unity": "2022.3",
+  "dependencies": {
+    "com.royogames.core": "https://github.com/Royo-Games/RoyoGames-Core.git#v0.0.1"
+  },
+  "samples": [
+    {
+      "description": "Royo Games UI examples",
+      "displayName": "Example Files",
+      "path": "Samples~"
+    }
+  ],
   "author": {
     "name": "Royo Games",
     "email": "royogames2020@gmail.com",

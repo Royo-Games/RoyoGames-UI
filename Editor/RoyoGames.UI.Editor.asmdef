@@ -1,0 +1,21 @@
+{
+    "name": "RoyoGames.UI.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:634310fbd4a4b814b9d0c8347b2c81db",
+        "GUID:6552429c42307074bac8a278e4d56983"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        ""
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

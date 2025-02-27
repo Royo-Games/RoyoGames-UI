@@ -160,19 +160,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629edfee13d1a004eb382e81e808547a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableEscapeClose: 0
-  openTrigger: Fade In
-  closeTrigger: Fade Out
-  onOpening:
+  enableEscapeHide: 0
+  editMode: 0
+  showTrigger: Size Up
+  showSpeed: 1
+  hideTrigger: Size Down
+  hideSpeed: 1
+  onBeginOpen:
     m_PersistentCalls:
       m_Calls: []
-  onOpened:
+  onEndOpen:
     m_PersistentCalls:
       m_Calls: []
-  onClosing:
+  onBeginHide:
     m_PersistentCalls:
       m_Calls: []
-  onClosed:
+  onEndHide:
     m_PersistentCalls:
       m_Calls: []
   eventsShow: 0

@@ -1,20 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimatedInfoExample : MonoBehaviour
 {
-    [SerializeField] AnimatedInfo animatedInfoPrefab;
-    [SerializeField] int maxCount = 2;
+    [SerializeField] UIPanel warning;
+    [SerializeField] RectTransform button;
 
-    private AnimatedInfoPanel infoPanel;
-
-    private void Awake()
-    {   
-        infoPanel = GetComponent<AnimatedInfoPanel>();
-    }
     public void Create()
     {
-        infoPanel.InstantiateInfo(animatedInfoPrefab, maxCount);
+        warning.transform.position = button.position + new Vector3(0,500,0);
+        warning.Show();
     }
 }

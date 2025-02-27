@@ -8,8 +8,32 @@ public class ToggleAnimation : MonoBehaviour
     private Toggle toggle;
     private Animator animator;
 
-    [SerializeField] string onTrigger;
-    [SerializeField] string offTrigger;
+    [SerializeField] private string onTrigger;
+    [SerializeField] private string offTrigger;
+
+    public string OnTrigger
+    {
+        get
+        {
+            return onTrigger;
+        }
+        set
+        {
+            onTrigger = value;
+        }
+    }
+    public string OffTrigger
+    {
+        get
+        {
+            return offTrigger;
+        }
+        set
+        {
+            offTrigger = value;
+        }
+    }
+
 
     private Coroutine coroutine;
 

@@ -16,36 +16,33 @@ public class UIPanel : MonoBehaviour
     public UIPanelState State => state;
     public bool IsShow => state == UIPanelState.BeginShow || state == UIPanelState.EndShow;
 
-    public bool EnableEscapeHide => enableEscapeHide;
-
-    public string ShowAnimationName
+    public string ShowTriggerName
     {
         get { return showTrigger; }
         set { showTrigger = value; }
     }
-    public string HideAnimationName
+    public string HideTriggerName
     {
         get { return hideTrigger; }
         set { hideTrigger = value; }
     }
 
-    public UnityEvent OnOpening => onBeginOpen;
-    public UnityEvent OnOpened => onEndOpen;
-    public UnityEvent OnClosing => onBeginHide;
-    public UnityEvent OnClosed => onEndHide;
+    public UnityEvent OnBeginShow => onBeginShow;
+    public UnityEvent OnEndShow => onEndShow;
+    public UnityEvent OnBeginHide => onBeginHide;
+    public UnityEvent OnEndHide => onEndHide;
 
     [HideInInspector] private Animator animator;
     [HideInInspector] private CanvasGroup canvasGroup;
     private UIPanelState state;
 
-    [SerializeField] private bool enableEscapeHide;
     [SerializeField] private bool editMode;
     [SerializeField] private string showTrigger;
     [SerializeField] private float showSpeed = 1;
     [SerializeField] private string hideTrigger;
     [SerializeField] private float hideSpeed = 1;
-    [SerializeField][HideInInspector] private UnityEvent onBeginOpen;
-    [SerializeField][HideInInspector] private UnityEvent onEndOpen;
+    [SerializeField][HideInInspector] private UnityEvent onBeginShow;
+    [SerializeField][HideInInspector] private UnityEvent onEndShow;
     [SerializeField][HideInInspector] private UnityEvent onBeginHide;
     [SerializeField][HideInInspector] private UnityEvent onEndHide;
 
@@ -84,9 +81,6 @@ public class UIPanel : MonoBehaviour
     }
     public void Show(float delay, UnityAction onOpened)
     {
-        if (IsShow)
-            return;
-
         if (delay == 0)
             state = UIPanelState.BeginShow;
 
@@ -107,7 +101,7 @@ public class UIPanel : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         state = UIPanelState.BeginShow;
-        onBeginOpen.Invoke();
+        onBeginShow.Invoke();
 
         UIManager.Instance.ActivePanels.Add(this);
 
@@ -115,25 +109,22 @@ public class UIPanel : MonoBehaviour
         canvasGroup.blocksRaycasts = true;
         animator.enabled = true;
         animator.speed = showSpeed;
-        animator.SetTrigger(ShowAnimationName);
+        animator.SetTrigger(ShowTriggerName);
 
         yield return animator.WaitNormalizedTimeCoroutine(0, 1);
 
         state = UIPanelState.EndShow;
         animator.enabled = false;
         canvasGroup.alpha = 1;
-        this.onEndOpen.Invoke();
+        this.onEndShow.Invoke();
         onOpened?.Invoke();
     }
     public void ShowImmediate()
     {
-        if (IsShow)
-            return;
-
         state = UIPanelState.EndShow;
         animator.enabled = false;
         canvasGroup.alpha = 1;
-        onEndOpen?.Invoke();
+        onEndShow?.Invoke();
     }
     public void Hide(float delay = 0)
     {
@@ -145,9 +136,6 @@ public class UIPanel : MonoBehaviour
     }
     public void Hide(float delay, UnityAction onClosed)
     {
-        if (!IsShow)
-            return;
-
         if (delay == 0)
             state = UIPanelState.BeginHide;
 
@@ -176,7 +164,7 @@ public class UIPanel : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
         animator.enabled = true;
         animator.speed = hideSpeed;
-        animator.SetTrigger(HideAnimationName.Trim());
+        animator.SetTrigger(HideTriggerName.Trim());
 
         yield return animator.WaitNormalizedTimeCoroutine(0, 1);
 
@@ -189,9 +177,6 @@ public class UIPanel : MonoBehaviour
     }
     public void HideImmediate()
     {
-        if (!IsShow)
-            return;
-
         state = UIPanelState.EndHide;
         animator.enabled = false;
         canvasGroup.alpha = 0;

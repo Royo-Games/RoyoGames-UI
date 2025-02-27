@@ -129,34 +129,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629edfee13d1a004eb382e81e808547a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableEscapeClose: 0
+  enableEscapeHide: 0
   editMode: 0
-  openTrigger: Fade In
-  openSpeed: 1
-  closeTrigger: Fade Out
-  closeSpeed: 1
-  onOpening:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8610535799796485927}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onOpened:
+  showTrigger: Size Up
+  showSpeed: 1
+  hideTrigger: Size Down
+  hideSpeed: 1
+  onBeginOpen:
     m_PersistentCalls:
       m_Calls: []
-  onClosing:
+  onEndOpen:
     m_PersistentCalls:
       m_Calls: []
-  onClosed:
+  onBeginHide:
+    m_PersistentCalls:
+      m_Calls: []
+  onEndHide:
     m_PersistentCalls:
       m_Calls: []
   eventsShow: 1

@@ -49,8 +49,8 @@ public class UIPopup : MonoBehaviour
     private void Awake()
     {
         panel = GetComponent<UIPanel>();
-        panel.OnOpening.AddListener(OnPanelOpen);
-        panel.OnClosing.AddListener(OnPanelClose);
+        panel.OnBeginShow.AddListener(OnPanelOpen);
+        panel.OnBeginHide.AddListener(OnPanelClose);
 
         body = transform.Find("Body") as RectTransform;
         horizontalArrowArea = body.Find("Arrows/Horizontal Area") as RectTransform;

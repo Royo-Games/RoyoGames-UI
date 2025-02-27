@@ -136,6 +136,9 @@ public class UIPanel : MonoBehaviour
     }
     public void Hide(float delay, UnityAction onClosed)
     {
+        if (!IsShow)
+            return;
+
         if (delay == 0)
             state = UIPanelState.BeginHide;
 

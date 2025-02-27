@@ -8,9 +8,19 @@ public enum UIPopupDirection
     Right
 }
 
+[RequireComponent(typeof(UIPanel))]
 public class UIPopup : MonoBehaviour
 {
     private RectTransform body;
+
+    [SerializeField] private UIPopupDirection direction;
+    [SerializeField] private float offset;
+    [SerializeField] private Vector2 clampPadding = new Vector2(20, 20);
+    [Space]
+    [SerializeField] private bool autoClose = true;
+
+    private UIPanel panel;
+    private RectTransform rectTransform;
 
     public UIPanel Panel => panel;
     public bool AutoClose
@@ -25,19 +35,56 @@ public class UIPopup : MonoBehaviour
         }
     }
 
-    [SerializeField] private RectTransform pointRect;
-    [SerializeField] private UIPopupDirection direction;
+    public UIPopupDirection Direction
+    {
+        get
+        {
+            return direction;
+        }
+        set
+        {
+            direction = value;
+            isChanged = true;
+        }
+    }
 
-    [Space]
-    [SerializeField] private bool autoClose = true;
-
-    private UIPanel panel;
-    private RectTransform rectTransform;
-
-    private float heightOfset;
-    private float widthOfset;
-
-    private Vector3 pointPosition;
+    public float Offset
+    {
+        get
+        {
+            return offset;
+        }
+        set
+        {
+            offset = value;
+            isChanged = true;
+        }
+    }
+    public Vector2 ClampPadding
+    {
+        get
+        {
+            return clampPadding;
+        }
+        set
+        {
+            clampPadding = value;
+            isChanged = true;
+        }
+    }
+    private Vector2 position;
+    public Vector2 Position
+    {
+        get
+        {
+            return position;
+        }
+        set
+        {
+            position = value;
+            isChanged = true;
+        }
+    }
 
     private RectTransform horizontalArrowArea;
     private RectTransform verticalArrowArea;
@@ -45,6 +92,8 @@ public class UIPopup : MonoBehaviour
     private RectTransform[] arrows = new RectTransform[4];
 
     private RectTransform currentArrow;
+    private UIPopupDirection currentDirection;
+    private bool isChanged;
 
     private void Awake()
     {
@@ -64,26 +113,23 @@ public class UIPopup : MonoBehaviour
         rectTransform = transform as RectTransform;
         enabled = false;
     }
-    public void Open()
+    private void OnValidate()
     {
-        Open(pointRect, direction);
+        if (Application.isPlaying)
+            isChanged = true;
     }
-    public void Open(RectTransform pointRect)
+    public void Show(Vector2 position)
     {
-        Open(pointRect, direction);
+        Show(position, offset);
     }
-    public void Open(UIPopupDirection direction)
+    public void Show(Vector2 position, float offset)
     {
-        Open(pointRect, direction);
-    }
-    public void Open(RectTransform pointRect, UIPopupDirection direction)
-    {
-        this.direction = direction;
-        this.pointRect = pointRect;
+        this.offset = offset;
+        this.position = position;
         UpdatePopupPosition();
         panel.Show();
     }
-    public void Close(float delay = 0)
+    public void Hide(float delay = 0)
     {
         panel.Hide(delay);
     }
@@ -93,46 +139,45 @@ public class UIPopup : MonoBehaviour
         {
             if (autoClose && Input.GetMouseButton(0) && !RectTransformUtility.RectangleContainsScreenPoint(body, Input.mousePosition))
             {
-                Close();
+                Hide();
             }
         }
 
-        UpdatePopupPosition();
-    }
-
-    private void UpdatePopupPosition()
-    {
-        if (pointRect != null)
+        if (isChanged)
         {
-            pointPosition = rectTransform.InverseTransformPoint(pointRect.position);
-            var dir = DetectedDirection(direction);
-            UpdateArrowPosition(dir);
-
-            heightOfset = (pointRect.rect.height + currentArrow.rect.height) / 2;
-            widthOfset = (pointRect.rect.width + currentArrow.rect.width) / 2;
-
-            switch (dir)
-            {
-                case UIPopupDirection.Top:
-                    pointPosition.y += heightOfset;
-                    body.pivot = new Vector2(0.5f, 0);
-                    break;
-                case UIPopupDirection.Left:
-                    pointPosition.x -= widthOfset;
-                    body.pivot = new Vector2(1, 0.5f);
-                    break;
-                case UIPopupDirection.Right:
-                    pointPosition.x += widthOfset;
-                    body.pivot = new Vector2(0, 0.5f);
-                    break;
-                case UIPopupDirection.Bot:
-                    pointPosition.y -= heightOfset;
-                    body.pivot = new Vector2(0.5f, 1);
-                    break;
-            }
-
-            body.localPosition = ClampPosition(pointPosition, body, rectTransform);
+            isChanged = false;
+            UpdatePopupPosition();
         }
+    }
+    public void UpdatePopupPosition()
+    {
+        Vector3 pointPosition = rectTransform.InverseTransformPoint(Position);
+
+        currentDirection = DetectedDirection(pointPosition, direction);
+
+        switch (currentDirection)
+        {
+            case UIPopupDirection.Top:
+                pointPosition.y += offset;
+                body.pivot = new Vector2(0.5f, 0);
+                break;
+            case UIPopupDirection.Left:
+                pointPosition.x -= offset;
+                body.pivot = new Vector2(1, 0.5f);
+                break;
+            case UIPopupDirection.Right:
+                pointPosition.x += offset;
+                body.pivot = new Vector2(0, 0.5f);
+                break;
+            case UIPopupDirection.Bot:
+                pointPosition.y -= offset;
+                body.pivot = new Vector2(0.5f, 1);
+                break;
+        }
+
+        body.localPosition = ClampPosition(pointPosition, body, rectTransform);
+        UpdateArrowPosition(currentDirection);
+
     }
     private void UpdateArrowPosition(UIPopupDirection direction)
     {
@@ -158,14 +203,14 @@ public class UIPopup : MonoBehaviour
         {
             case UIPopupDirection.Top:
             case UIPopupDirection.Bot:
-                pointPos = horizontalArrowArea.InverseTransformPoint(pointRect.position);
+                pointPos = horizontalArrowArea.InverseTransformPoint(Position);
                 clampSize = (horizontalArrowArea.rect.width - arrow.rect.width) / 2;
                 pos.x = Mathf.Clamp(pointPos.x, -clampSize, clampSize);
 
                 break;
             case UIPopupDirection.Left:
             case UIPopupDirection.Right:
-                pointPos = verticalArrowArea.InverseTransformPoint(pointRect.position);
+                pointPos = verticalArrowArea.InverseTransformPoint(Position);
                 clampSize = (verticalArrowArea.rect.height - arrow.rect.height) / 2;
                 pos.y = Mathf.Clamp(pointPos.y, -clampSize, clampSize);
                 break;
@@ -173,24 +218,24 @@ public class UIPopup : MonoBehaviour
 
         arrow.localPosition = pos;
     }
-    private UIPopupDirection DetectedDirection(UIPopupDirection direction)
+    private UIPopupDirection DetectedDirection(Vector3 pointPosition, UIPopupDirection direction)
     {
         switch (direction)
         {
             case UIPopupDirection.Top:
-                if (pointPosition.y + body.rect.height + heightOfset > rectTransform.rect.height / 2)
+                if (pointPosition.y + body.rect.height + offset > rectTransform.rect.height / 2)
                     direction = UIPopupDirection.Bot;
                 break;
             case UIPopupDirection.Right:
-                if (pointPosition.x + body.rect.width + widthOfset > rectTransform.rect.width / 2)
+                if (pointPosition.x + body.rect.width + offset > rectTransform.rect.width / 2)
                     direction = UIPopupDirection.Left;
                 break;
             case UIPopupDirection.Left:
-                if (pointPosition.x - body.rect.width - widthOfset < -rectTransform.rect.width / 2)
+                if (pointPosition.x - body.rect.width - offset < -rectTransform.rect.width / 2)
                     direction = UIPopupDirection.Right;
                 break;
             case UIPopupDirection.Bot:
-                if (pointPosition.y - body.rect.height - heightOfset < -rectTransform.rect.height / 2)
+                if (pointPosition.y - body.rect.height - offset < -rectTransform.rect.height / 2)
                     direction = UIPopupDirection.Top;
                 break;
         }
@@ -199,14 +244,15 @@ public class UIPopup : MonoBehaviour
     }
     private Vector3 ClampPosition(Vector3 pos, RectTransform panel, RectTransform parent)
     {
-        Vector3 minPosition = parent.rect.min - panel.rect.min;
-        Vector3 maxPosition = parent.rect.max - panel.rect.max;
+        Vector2 minPosition = parent.rect.min - panel.rect.min + clampPadding;
+        Vector2 maxPosition = parent.rect.max - panel.rect.max - clampPadding;
 
         pos.x = Mathf.Clamp(pos.x, minPosition.x, maxPosition.x);
         pos.y = Mathf.Clamp(pos.y, minPosition.y, maxPosition.y);
 
         return pos;
     }
+
     private void OnPanelOpen()
     {
         enabled = true;

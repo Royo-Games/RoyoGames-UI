@@ -35,7 +35,16 @@ public class ButtonAnimationInspector : Editor
     }
     public override void OnInspectorGUI()
     {
+        serializedObject.Update();
+
         buttonAnimation.DownTrigger = downTriggerProperty.DrawLayout("Down trigger");
         buttonAnimation.UpTrigger = upTriggerProperty.DrawLayout("Up trigger");
+
+        if(GUI.changed)
+        {
+            EditorUtility.SetDirty(target);
+        }
+
+        serializedObject.ApplyModifiedProperties();
     }
 }

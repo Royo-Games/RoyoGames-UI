@@ -35,7 +35,14 @@ public class ToggleAnimationInspector : Editor
     }
     public override void OnInspectorGUI()
     {
+        serializedObject.Update();
+
         toggleAnimation.OnTrigger = onTriggerProperty.DrawLayout("On trigger");
         toggleAnimation.OffTrigger = offTriggerProperty.DrawLayout("Off trigger");
+
+        if (GUI.changed)
+            EditorUtility.SetDirty(target);
+
+        serializedObject.ApplyModifiedProperties();
     }
 }

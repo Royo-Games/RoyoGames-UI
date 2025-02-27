@@ -2665,11 +2665,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3262286226092679713, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
       propertyPath: upTrigger
-      value: 
+      value: Up
       objectReference: {fileID: 0}
     - target: {fileID: 3262286226092679713, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
       propertyPath: downTrigger
-      value: 
+      value: Down
       objectReference: {fileID: 0}
     - target: {fileID: 3262286226092679713, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3846,11 +3846,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3262286226092679713, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
       propertyPath: upTrigger
-      value: 
+      value: Up
       objectReference: {fileID: 0}
     - target: {fileID: 3262286226092679713, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
       propertyPath: downTrigger
-      value: 
+      value: Down
       objectReference: {fileID: 0}
     - target: {fileID: 3262286226092679713, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

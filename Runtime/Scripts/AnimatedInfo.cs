@@ -1,36 +1,74 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class AnimatedInfo : MonoBehaviour
 {
-    [SerializeField] string infoName;
-    [SerializeField] string animationTriggerName;
-    [SerializeField] float animationSpeed = 1;
+    public static List<AnimatedInfo> ActiveList = new();
+    public static int MaxCount = 1;
 
-    public string InfoName => infoName;
-    private Animator animator;
+    [SerializeField] private bool autoDestroy = true;
+    [SerializeField] private bool autoShow = true;
 
+    public UIPanel Panel { get; private set; }
+
+    public bool AutoDestroy
+    {
+        get
+        {
+            return autoDestroy;
+        }
+        set
+        {
+            autoDestroy = value;
+        }
+    }
+    public bool AutoShow
+    {
+        get
+        {
+            return autoShow;
+        }
+        set
+        {
+            autoShow = value;
+        }
+    }
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        Panel = GetComponent<UIPanel>();
+        Panel.OnBeginShow.AddListener(OnBeginShow);
+        Panel.OnEndShow.AddListener(OnEndShow);
+        Panel.OnEndHide.AddListener(OnEndHide);
     }
-    internal void Play(AnimatedInfoPanel controller)
+    private void Start()
     {
-        StartCoroutine(IPlay(controller));
+        if(autoShow)
+            Panel.Show();
     }
-    private IEnumerator IPlay(AnimatedInfoPanel controller)
+    private void OnDestroy()
     {
-        animator.speed = animationSpeed;
-        animator.SetTrigger(animationTriggerName);
-        yield return new WaitForEndOfFrame();
-        yield return new WaitUntil(() => IsAnimationEnding());
-        controller.EndInfo(this);
+        ActiveList.Remove(this);
     }
-    private bool IsAnimationEnding()
+    private void OnBeginShow()
     {
-        var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        return !animator.IsInTransition(0) && stateInfo.normalizedTime >= 1;
+        if(ActiveList.Count > 0 && ActiveList.Count >= MaxCount)
+        {
+            ActiveList[0].Panel.HideImmediate();
+            ActiveList.RemoveAt(0);
+        }
+
+        ActiveList.Add(this);
+    }
+    private void OnEndShow()
+    {
+        ActiveList.Remove(this);
+        Panel.Hide();
+    }
+    private void OnEndHide()
+    {
+        if(autoDestroy)
+        Destroy(gameObject);
     }
 }

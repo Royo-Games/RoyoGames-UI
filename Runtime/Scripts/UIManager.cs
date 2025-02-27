@@ -27,20 +27,4 @@ public class UIManager : MonoBehaviour
     {
         isDestroy = true;
     }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            for (int i = ActivePanels.Count-1; i >= 0; i--)
-            {
-                var panel = ActivePanels[i];
-
-                if(panel.EnableEscapeHide)
-                {
-                    panel.Hide();
-                    break;
-                }
-            }
-        }
-    }
 }

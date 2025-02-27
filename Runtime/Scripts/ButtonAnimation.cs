@@ -5,11 +5,33 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Animator))]
 public class ButtonAnimation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public string DownTrigger = "Down";
-    public string UpTrigger = "Up";
+    [SerializeField] private string downTrigger;
+    [SerializeField] private string upTrigger;
+
+    public string DownTrigger
+    {
+        get
+        {
+            return downTrigger;
+        }
+        set
+        {
+            downTrigger = value;
+        }
+    }
+    public string UpTrigger
+    {
+        get
+        {
+            return upTrigger;
+        }
+        set
+        {
+            upTrigger = value;
+        }
+    }
 
     private Animator animator;
-
     private Coroutine coroutine;
 
     private void Awake()

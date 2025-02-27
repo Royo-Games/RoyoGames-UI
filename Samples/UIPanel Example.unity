@@ -957,6 +957,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 338154127}
   m_CullTransparentMesh: 1
+--- !u!1 &494104306 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6831395169642104768, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
+  m_PrefabInstance: {fileID: 1714755111}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &498094020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,6 +1096,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498094020}
   m_CullTransparentMesh: 1
+--- !u!1 &518904164 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6831395169642104768, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
+  m_PrefabInstance: {fileID: 66385427209443811}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2654,6 +2664,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 2088802863}
     m_Modifications:
     - target: {fileID: 3262286226092679713, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
+      propertyPath: upTrigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3262286226092679713, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
+      propertyPath: downTrigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3262286226092679713, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7232168688062580435}
@@ -2755,7 +2773,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9079800235290619326, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
       insertIndex: -1
       addedObject: {fileID: 527476572}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6831395169642104768, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1714755116}
   m_SourcePrefab: {fileID: 100100000, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
 --- !u!224 &1714755112 stripped
 RectTransform:
@@ -2767,6 +2788,35 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9079800235290619326, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
   m_PrefabInstance: {fileID: 1714755111}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1714755116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494104306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7232168688062580435}
+          m_TargetAssemblyTypeName: UIPanel, RoyoGames.UI
+          m_MethodName: Hide
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1837335581
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,6 +3090,35 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4047109314499327325, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
   m_PrefabInstance: {fileID: 66385427209443811}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1898293528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518904164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7232168688062580435}
+          m_TargetAssemblyTypeName: UIPanel, RoyoGames.UI
+          m_MethodName: Show
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1950494146
 GameObject:
   m_ObjectHideFlags: 0
@@ -3766,6 +3845,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 2088802863}
     m_Modifications:
     - target: {fileID: 3262286226092679713, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
+      propertyPath: upTrigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3262286226092679713, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
+      propertyPath: downTrigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3262286226092679713, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7232168688062580435}
@@ -3859,7 +3946,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9079800235290619326, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
       insertIndex: -1
       addedObject: {fileID: 498094021}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6831395169642104768, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1898293528}
   m_SourcePrefab: {fileID: 100100000, guid: 05ce075a623bc1343b62ab65c4742697, type: 3}
 --- !u!1 &1510336144981764126
 GameObject:
@@ -4017,16 +4107,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629edfee13d1a004eb382e81e808547a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableEscapeHide: 0
   editMode: 0
-  showTrigger: 
+  showTrigger: Size Up
   showSpeed: 1
-  hideTrigger: 
+  hideTrigger: Size Down
   hideSpeed: 1
-  onBeginOpen:
+  onBeginShow:
     m_PersistentCalls:
       m_Calls: []
-  onEndOpen:
+  onEndShow:
     m_PersistentCalls:
       m_Calls: []
   onBeginHide:

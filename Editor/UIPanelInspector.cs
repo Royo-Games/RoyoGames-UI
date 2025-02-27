@@ -1,27 +1,53 @@
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
+using System.Collections.Generic;
 
 [CustomEditor(typeof(UIPanel))]
 public class UIPanelInspector : Editor
 {
     private UIPanel panel;
 
+    private StringArrayPopupProperty showTriggerProperty;
+    private StringArrayPopupProperty hideTriggerProperty;
+
     private void OnEnable()
     {
         panel = target as UIPanel;
+        InitTriggerProperties();
+    }
+    private void InitTriggerProperties()
+    {
+        AnimatorController animatorController = panel.GetComponent<Animator>().runtimeAnimatorController as AnimatorController;
+
+        List<string> trigerList = new();
+
+        foreach (var parameter in  animatorController.parameters)
+        {
+            if(parameter.type == AnimatorControllerParameterType.Trigger)
+                trigerList.Add(parameter.name);
+        }
+
+        string[] triggerArray = trigerList.ToArray();
+
+        showTriggerProperty = new StringArrayPopupProperty(triggerArray, panel.ShowTriggerName);
+        hideTriggerProperty = new StringArrayPopupProperty(triggerArray, panel.HideTriggerName);
     }
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("showTrigger"));
+        EditorGUI.BeginChangeCheck();
+
+        panel.ShowTriggerName = showTriggerProperty.DrawLayout("Show Trigger");
         EditorGUILayout.PropertyField(serializedObject.FindProperty("showSpeed"));
+
         EditorGUILayout.Space();
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("hideTrigger"));
+
+        panel.HideTriggerName = hideTriggerProperty.DrawLayout("Hide Trigger");
         EditorGUILayout.PropertyField(serializedObject.FindProperty("hideSpeed"));
 
         EditorGUILayout.Space();
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("enableEscapeHide"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("editMode"));
         EditorGUILayout.Space();
 
@@ -31,8 +57,8 @@ public class UIPanelInspector : Editor
         if (eventsShowProperty.boolValue)
         {
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("onBeginOpen"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("onEndOpen"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("onBeginShow"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("onEndShow"));
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(serializedObject.FindProperty("onBeginHide"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("onEndHide"));

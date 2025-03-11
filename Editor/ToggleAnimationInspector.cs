@@ -4,16 +4,16 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
-[CustomEditor(typeof(ToggleAnimation))]
+[CustomEditor(typeof(ToggleSwitchAnimation))]
 public class ToggleAnimationInspector : Editor
 {
-    private ToggleAnimation toggleAnimation;
+    private ToggleSwitchAnimation toggleAnimation;
     private StringArrayPopupProperty onTriggerProperty;
     private StringArrayPopupProperty offTriggerProperty;
 
     private void OnEnable()
     {
-        toggleAnimation = (ToggleAnimation)target;
+        toggleAnimation = (ToggleSwitchAnimation)target;
         InitTriggerProperties();
     }
     private void InitTriggerProperties()

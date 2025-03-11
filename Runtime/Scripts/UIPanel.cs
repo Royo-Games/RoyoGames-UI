@@ -64,13 +64,6 @@ public class UIPanel : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0;
     }
-    public virtual void OnDestroy()
-    {
-        if (IsShow)
-        {
-            UIManager.Instance?.ActivePanels.Remove(this);
-        }
-    }
     public void Show(float delay = 0)
     {
         Show(delay, null);
@@ -102,8 +95,6 @@ public class UIPanel : MonoBehaviour
 
         state = UIPanelState.BeginShow;
         onBeginShow.Invoke();
-
-        UIManager.Instance.ActivePanels.Add(this);
 
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = true;
@@ -157,8 +148,6 @@ public class UIPanel : MonoBehaviour
     private IEnumerator IHide(float delay, UnityAction onClosed)
     {
         yield return new WaitForSeconds(delay);
-
-        UIManager.Instance.ActivePanels.Remove(this);
 
         state = UIPanelState.BeginHide;
         onBeginHide.Invoke();

@@ -129,16 +129,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629edfee13d1a004eb382e81e808547a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableEscapeHide: 0
   editMode: 0
   showTrigger: Size Up
   showSpeed: 1
   hideTrigger: Size Down
   hideSpeed: 1
-  onBeginOpen:
+  onBeginShow:
     m_PersistentCalls:
       m_Calls: []
-  onEndOpen:
+  onEndShow:
     m_PersistentCalls:
       m_Calls: []
   onBeginHide:
@@ -147,7 +146,7 @@ MonoBehaviour:
   onEndHide:
     m_PersistentCalls:
       m_Calls: []
-  eventsShow: 1
+  eventsShow: 0
 --- !u!1 &5779878188382100411
 GameObject:
   m_ObjectHideFlags: 0

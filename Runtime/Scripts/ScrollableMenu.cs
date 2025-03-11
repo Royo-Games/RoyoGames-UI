@@ -18,7 +18,6 @@ public class ScrollableMenu : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = 60;
         ScrollRect.onValueChanged.AddListener(ScrollRectOnValueChanged);
         ScrollRectSnap.OnCenterElement.AddListener(OnChangedCenterElement);
     }

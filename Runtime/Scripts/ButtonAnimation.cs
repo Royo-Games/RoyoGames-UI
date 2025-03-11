@@ -1,11 +1,13 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
 public class ButtonAnimation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private string downTrigger;
+    [SerializeField] private string overTrigger;
     [SerializeField] private string upTrigger;
 
     public string DownTrigger

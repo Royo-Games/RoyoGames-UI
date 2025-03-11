@@ -26,7 +26,7 @@ public class UIMenuItems : MonoBehaviour
     {
         if (Selection.activeGameObject != null)
         {
-            AddComponenetsSelectedObjects<ToggleAnimation>();
+            AddComponenetsSelectedObjects<ToggleSwitchAnimation>();
         }
     }
     [MenuItem("Component/Royo Games/UI/ScrollRectSnap", false, 0)]

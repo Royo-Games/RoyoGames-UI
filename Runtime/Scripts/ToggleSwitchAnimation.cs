@@ -2,14 +2,14 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Toggle), typeof(Animator))]
-public class ToggleAnimation : MonoBehaviour
+[RequireComponent(typeof(Animator))]
+public class ToggleSwitchAnimation : MonoBehaviour
 {
     private Toggle toggle;
     private Animator animator;
 
-    [SerializeField] private string onTrigger;
-    [SerializeField] private string offTrigger;
+    [SerializeField] private string onTrigger = "On";
+    [SerializeField] private string offTrigger = "Off";
 
     public string OnTrigger
     {
@@ -39,7 +39,7 @@ public class ToggleAnimation : MonoBehaviour
 
     public virtual void Start()
     {
-        toggle = GetComponent<Toggle>();
+        toggle = GetComponentInParent<Toggle>();
         animator= GetComponent<Animator>(); 
         toggle.onValueChanged.AddListener(OnChanged);
         SetTrigger(toggle.isOn);
@@ -58,7 +58,7 @@ public class ToggleAnimation : MonoBehaviour
     }
     private void SetTrigger(string triggerName)
     {
-        animator.enabled = true;
+        //animator.enabled = true;
 
         if (coroutine != null)
             StopCoroutine(coroutine);
@@ -69,6 +69,6 @@ public class ToggleAnimation : MonoBehaviour
     {
         animator.SetTrigger(triggerName);
         yield return animator.WaitNormalizedTimeCoroutine(0, 1);
-        animator.enabled = false;
+        //animator.enabled = false;
     }
 }

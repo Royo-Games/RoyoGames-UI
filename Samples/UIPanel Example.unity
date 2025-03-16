@@ -1359,9 +1359,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editMode: 0
-  showTrigger: Size Up
+  showTrigger: Size In
   showSpeed: 1
-  hideTrigger: Size Down
+  hideTrigger: Size Out
   hideSpeed: 1
   onBeginShow:
     m_PersistentCalls:

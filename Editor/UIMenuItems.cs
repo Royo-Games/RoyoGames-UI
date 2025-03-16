@@ -3,54 +3,71 @@ using UnityEngine;
 
 public class UIMenuItems : MonoBehaviour
 {
-    [MenuItem("Component/Royo Games/UI/UIPanel", true, 0)]
-    [MenuItem("Component/Royo Games/UI/ToggleAnimation", true, 0)]
-    [MenuItem("Component/Royo Games/UI/ScrollRectSnap", true, 0)]
-    [MenuItem("Component/Royo Games/UI/ScrollRectSnapItem", true, 0)]
-    [MenuItem("Component/Royo Games/UI/ScrollRectSnapScaleEffect", true, 0)]
+    [MenuItem("GameObject/Royo Games/UI/UIPopup", true, 0)]
+    [MenuItem("GameObject/Royo Games/UI/UIPanel", true, 0)]
+    [MenuItem("GameObject/Royo Games/UI/UIPointer", true, 0)]
+    [MenuItem("GameObject/Royo Games/UI/AnimatedButton", true, 0)]
+    [MenuItem("GameObject/Royo Games/UI/AnimatedToggle", true, 0)]
+    [MenuItem("GameObject/Royo Games/UI/Joystick", true, 0)]
+    [MenuItem("GameObject/Royo Games/UI/DragPad", true, 0)]
     private static bool ValidateSelectedGameObject()
     {
         return Selection.activeGameObject != null;
     }
-
-    [MenuItem("Component/Royo Games/UI/UIPanel",false, 0)]
+    [MenuItem("GameObject/Royo Games/UI/UIPanel", false, 0)]
     private static void AddUIPanel()
     {
         if(Selection.activeGameObject != null)
         {
-            AddComponenetsSelectedObjects<UIPanel>(); 
+            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/UI Panel"), Selection.activeGameObject.transform);
         }
     }
-    [MenuItem("Component/Royo Games/UI/ToggleAnimation", false, 0)]
-    private static void AddToggleAnimation()
+    [MenuItem("GameObject/Royo Games/UI/UIPopup", false, 0)]
+    private static void AddUIPopup()
     {
         if (Selection.activeGameObject != null)
         {
-            AddComponenetsSelectedObjects<ToggleSwitchAnimation>();
+            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/UI Popup"), Selection.activeGameObject.transform);
         }
     }
-    [MenuItem("Component/Royo Games/UI/ScrollRectSnap", false, 0)]
-    private static void AddScrollRectSnap()
+    [MenuItem("GameObject/Royo Games/UI/UIPointer", false, 0)]
+    private static void AddUIPointer()
     {
         if (Selection.activeGameObject != null)
         {
-            AddComponenetsSelectedObjects<ScrollRectSnap>();
+            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/UI Pointer"), Selection.activeGameObject.transform);
         }
     }
-    [MenuItem("Component/Royo Games/UI/ScrollRectSnapScaleEffect", false, 0)]
-    private static void AddScrollRectSnapScaleEffect()
+    [MenuItem("GameObject/Royo Games/UI/AnimatedButton", false, 0)]
+    private static void AddAnmatedButton()
     {
         if (Selection.activeGameObject != null)
         {
-            AddComponenetsSelectedObjects<ScrollRectSnapScaleEffect>();
+            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/Animated Button"), Selection.activeGameObject.transform);
         }
     }
-    [MenuItem("Component/Royo Games/UI/SubScrollRect", false, 0)]
-    private static void AddSubScrollRect()
+    [MenuItem("GameObject/Royo Games/UI/AnimatedToggle", false, 0)]
+    private static void AddAnmatedToggle()
     {
         if (Selection.activeGameObject != null)
         {
-            AddComponenetsSelectedObjects<SubScrollRect>();
+            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/Animated Toggle"), Selection.activeGameObject.transform);
+        }
+    }
+    [MenuItem("GameObject/Royo Games/UI/Joystick", false, 0)]
+    private static void AddJoystick()
+    {
+        if (Selection.activeGameObject != null)
+        {
+            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/Joystick"), Selection.activeGameObject.transform);
+        }
+    }
+    [MenuItem("GameObject/Royo Games/UI/DragPad", false, 0)]
+    private static void AddDragPad()
+    {
+        if (Selection.activeGameObject != null)
+        {
+            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/Drag Pad"), Selection.activeGameObject.transform);
         }
     }
     private static void AddComponenetsSelectedObjects<T>() where T : Component

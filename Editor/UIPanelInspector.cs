@@ -22,10 +22,13 @@ public class UIPanelInspector : Editor
 
         List<string> trigerList = new();
 
-        foreach (var parameter in  animatorController.parameters)
+        if (animatorController != null)
         {
-            if(parameter.type == AnimatorControllerParameterType.Trigger)
-                trigerList.Add(parameter.name);
+            foreach (var parameter in animatorController.parameters)
+            {
+                if (parameter.type == AnimatorControllerParameterType.Trigger)
+                    trigerList.Add(parameter.name);
+            }
         }
 
         string[] triggerArray = trigerList.ToArray();

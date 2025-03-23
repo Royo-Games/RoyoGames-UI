@@ -2,40 +2,48 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+[DefaultExecutionOrder(1000)]
 public class DragPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     [Space]
-    [SerializeField] UnityEvent<DragPad> _onBeginDragEvent;
-    [SerializeField] UnityEvent<DragPad> _onEndDragEvent;
-    [SerializeField] UnityEvent<DragPad> _onDragEvent;
+    [SerializeField] UnityEvent<DragPad> _onDragDownEvent;
+    [SerializeField] UnityEvent<DragPad> _onDragUpEvent;
+    [SerializeField] UnityEvent<DragPad> _onDraggingEvent;
 
-    public UnityEvent<DragPad> OnBeginDragEvent => _onBeginDragEvent;
-    public UnityEvent<DragPad> OnEndDragEvent => _onEndDragEvent;
-    public UnityEvent<DragPad> OnDragEvent => _onDragEvent;
+    public UnityEvent<DragPad> OnDragDownEvent => _onDragDownEvent;
+    public UnityEvent<DragPad> OnDragUpEvent => _onDragUpEvent;
+    public UnityEvent<DragPad> OnDraggingEvent => _onDraggingEvent;
 
-    public bool IsDragging { get; private set; }
     public Vector2 Delta { get; private set; }
     public Vector2 TotalDelta { get; private set; }
+
+    public bool IsDragDown { get; private set; }
+    public bool IsDragUp { get; private set; }
+    public bool IsDragging { get; private set; }
 
     public virtual void LateUpdate()
     {
         Delta = Vector2.zero;
+        IsDragDown = false;
+        IsDragging = false;
+        IsDragUp = false;
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        IsDragging = true;
-        _onBeginDragEvent?.Invoke(this);
+        IsDragDown = true;
+        _onDragDownEvent?.Invoke(this);
     }
     public void OnDrag(PointerEventData eventData)
     {
+        IsDragging = true;
         Delta = eventData.delta;
         TotalDelta += Delta;
-        OnDragEvent?.Invoke(this);
+        OnDraggingEvent?.Invoke(this);
     }
     public void OnPointerUp(PointerEventData eventData)
     {
         TotalDelta = Vector2.zero;
-        IsDragging = false;
-        _onEndDragEvent?.Invoke(this);
+        IsDragUp = true;
+        _onDragUpEvent?.Invoke(this);
     }
 }

@@ -23,6 +23,7 @@ public enum JoystickVisibility
     UnVisible
 }
 
+[DefaultExecutionOrder(1000)]
 public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     [Header("Settings")]
@@ -39,17 +40,21 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     [SerializeField] RectTransform _handle;
 
     [Header("Events")]
-    [SerializeField] UnityEvent<Joystick> _onBeginDragEvent;
-    [SerializeField] UnityEvent<Joystick> _onEndDragEvent;
-    [SerializeField] UnityEvent<Joystick> _onDragEvent;
+    [SerializeField] UnityEvent<Joystick> _onDragDownEvent;
+    [SerializeField] UnityEvent<Joystick> _onDragUpEvent;
+    [SerializeField] UnityEvent<Joystick> _onDraggingEvent;
 
     public Vector2 Direction { get; private set; }
     public Vector2 Delta { get; private set; }
     public Vector2 TotalDelta { get; private set; }
+
+    public bool IsDragDown { get; private set; }
+    public bool IsDragUp { get; private set; }
     public bool IsDragging { get; private set; }
-    public UnityEvent<Joystick> OnBeginDragEvent => _onBeginDragEvent;
-    public UnityEvent<Joystick> OnEndDragEvent => _onEndDragEvent;
-    public UnityEvent<Joystick> OnDragEvent => _onDragEvent;
+
+    public UnityEvent<Joystick> OnDragDownEvent => _onDragDownEvent;
+    public UnityEvent<Joystick> OnDragUpEvent => _onDragUpEvent;
+    public UnityEvent<Joystick> OnDraggingEvent => _onDraggingEvent;
 
     private Vector2 _startPosition;
     private Camera _cam;
@@ -66,6 +71,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     public virtual void LateUpdate()
     {
         Delta = Vector2.zero;
+        IsDragDown = false;
+        IsDragging = false;
+        IsDragUp = false;
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)
@@ -80,8 +88,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
         OnDrag(eventData);
 
-        IsDragging = true;
-        _onBeginDragEvent?.Invoke(this);
+        _onDragDownEvent?.Invoke(this);
     }
 
     public virtual void OnDrag(PointerEventData eventData)
@@ -125,7 +132,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
             }
         }
 
-        _onDragEvent?.Invoke(this);
+        IsDragging = true;
+        _onDraggingEvent?.Invoke(this);
     }
     public virtual void OnPointerUp(PointerEventData eventData)
     {
@@ -139,8 +147,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
         UpdateVisibility();
 
-            IsDragging = false;
-        _onEndDragEvent?.Invoke(this);
+        _onDragUpEvent?.Invoke(this);
     }
     protected virtual void UpdateVisibility()
     {

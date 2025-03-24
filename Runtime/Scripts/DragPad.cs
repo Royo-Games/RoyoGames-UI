@@ -30,10 +30,6 @@ public class DragPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, ID
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        Delta = Vector2.zero;
-        IsDragging = false;
-        IsDragUp = false;
-
         IsDragDown = true;
         _onDragDownEvent?.Invoke(this);
     }
@@ -46,11 +42,6 @@ public class DragPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, ID
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        TotalDelta = Vector2.zero;
-        Delta = Vector2.zero;
-        IsDragging = false;
-        IsDragDown = false;
-
         IsDragUp = true;
         _onDragUpEvent?.Invoke(this);
     }

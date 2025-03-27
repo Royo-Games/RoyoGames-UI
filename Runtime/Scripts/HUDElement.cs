@@ -2,26 +2,36 @@ using UnityEngine;
 
 public class HUDElement : MonoBehaviour
 {
-    public Camera Camera;
+    [SerializeField] private Camera _worldCamera;
 
     [Space]
-    public Transform Target;
-    public Vector3 TargetOffset;
+    [SerializeField] private Transform _target;
+    [SerializeField] private Vector3 _targetOffset;
 
     [Space]
-    public bool EnableClamp;
-    public Vector2 ClampOffset;
+    [SerializeField] private bool _enableClamp;
+    [SerializeField] private Vector2 _clampOffset;
 
     [Space]
-    public bool EnableAutoScale;
-    public float minDistance = 5;
-    public float maxDistance = 50;
-    public float minScale = 0.5f;
-    public float maxScale = 1f;
+    [SerializeField] private bool _enableAutoScale;
+    [SerializeField] private float _scaleReference = 1;
+    [SerializeField] private float _minScale = 0.1f;
 
     protected RectTransform rect;
     protected RectTransform canvasRect;
     protected Canvas canvas;
+
+    public Transform Target
+    {
+        get=> _target;
+        set=> _target = value;
+    }
+
+    public Camera WorldCamera
+    {
+        get => _worldCamera; 
+        set => _worldCamera = value;
+    }
 
     private void Awake()
     {
@@ -32,7 +42,7 @@ public class HUDElement : MonoBehaviour
 
     public virtual void Update()
     {
-        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera, Target.position + TargetOffset);
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(_worldCamera, _target.position + _targetOffset);
 
         if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
         {
@@ -40,23 +50,20 @@ public class HUDElement : MonoBehaviour
         }
         else
         {
-            Vector2 localPoint;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPoint,
-                canvas.renderMode == RenderMode.ScreenSpaceCamera ? Camera : null, out localPoint);
+                canvas.renderMode == RenderMode.ScreenSpaceCamera ? _worldCamera : null, out Vector2 localPoint);
             rect.localPosition = localPoint;
         }
 
-        if(EnableAutoScale)
+        if(_enableAutoScale)
         {
-            float distance = Vector3.Distance(Camera.transform.position, Target.position);
-            float t = Mathf.InverseLerp(minDistance, maxDistance, distance);
-            float scale = Mathf.Lerp(maxScale, minScale, t);
-            rect.localScale = new Vector3(scale, scale, scale);
+            float distance = Vector3.Distance(_worldCamera.transform.position, _target.position);
+            rect.localScale = Vector3.one * _scaleReference / distance;
         }
 
 
-        if (EnableClamp)
-            Clamp(canvasRect, rect, ClampOffset);
+        if (_enableClamp)
+            Clamp(canvasRect, rect, _clampOffset);
     }
 
     protected virtual void Clamp(RectTransform canvasRect, RectTransform rect, Vector2 offset)

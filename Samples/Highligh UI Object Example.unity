@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2040394356653936835, guid: 19f9a7f28490cf6459aac97412150895, type: 3}
       propertyPath: m_Alpha
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2812592061717038909, guid: 19f9a7f28490cf6459aac97412150895, type: 3}
       propertyPath: m_Pivot.x
@@ -1266,6 +1266,7 @@ GameObject:
   - component: {fileID: 1376098460}
   - component: {fileID: 1376098462}
   - component: {fileID: 1376098461}
+  - component: {fileID: 1376098463}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1330,6 +1331,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1376098459}
   m_CullTransparentMesh: 1
+--- !u!114 &1376098463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376098459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e71bb953044c894694b2dde4a3dc3fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 0}
+  Target: {fileID: 0}
+  TargetOffset: {x: 0, y: 0, z: 0}
+  EnableClamp: 0
+  ClampOffset: {x: 0, y: 0}
+  EnableAutoScale: 0
+  minScale: 0.5
+  maxScale: 1
 --- !u!1 &1516908034 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6194831495339739950, guid: 3864a9a3da737ff45b13f212b07fff28, type: 3}

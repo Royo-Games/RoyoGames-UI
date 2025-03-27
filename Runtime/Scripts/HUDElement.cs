@@ -14,7 +14,7 @@ public class HUDElement : MonoBehaviour
 
     [Space]
     [SerializeField] private bool _enableAutoScale;
-    [SerializeField] private float _scaleReference = 1;
+    [SerializeField] private float _scaleReference = 10;
     [SerializeField] private float _minScale = 0.1f;
 
     protected RectTransform rect;
@@ -58,7 +58,8 @@ public class HUDElement : MonoBehaviour
         if(_enableAutoScale)
         {
             float distance = Vector3.Distance(_worldCamera.transform.position, _target.position);
-            rect.localScale = Vector3.one * _scaleReference / distance;
+            float scale = Mathf.Clamp(_scaleReference / distance, _minScale, 1);
+            rect.localScale = Vector3.one * scale;
         }
 
 

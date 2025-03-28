@@ -17,9 +17,11 @@ public class UIMenuItems : MonoBehaviour
     [MenuItem("GameObject/Royo Games/UI/UIPanel", false, 0)]
     private static void AddUIPanel()
     {
-        if(Selection.activeGameObject != null)
+        if (Selection.activeGameObject != null)
         {
-            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/UI Panel"), Selection.activeGameObject.transform);
+            GameObject uiPanel = Instantiate(Resources.Load<GameObject>("RoyoGames UI Elements/UI Panel"), Selection.activeGameObject.transform);
+            uiPanel.name = "UI Panel";
+            Selection.activeObject = uiPanel;
         }
     }
     [MenuItem("GameObject/Royo Games/UI/UIPopup", false, 0)]
@@ -27,7 +29,9 @@ public class UIMenuItems : MonoBehaviour
     {
         if (Selection.activeGameObject != null)
         {
-            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/UI Popup"), Selection.activeGameObject.transform);
+            GameObject uiPopup = Instantiate(Resources.Load<GameObject>("RoyoGames UI Elements/UI Popup"), Selection.activeGameObject.transform);
+            uiPopup.name = "UI Popup";
+            Selection.activeObject = uiPopup;
         }
     }
     [MenuItem("GameObject/Royo Games/UI/UIPointer", false, 0)]
@@ -35,7 +39,9 @@ public class UIMenuItems : MonoBehaviour
     {
         if (Selection.activeGameObject != null)
         {
-            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/UI Pointer"), Selection.activeGameObject.transform);
+            GameObject uiPointer = Instantiate(Resources.Load<GameObject>("RoyoGames UI Elements/UI Pointer"), Selection.activeGameObject.transform);
+            uiPointer.name = "UI Pointer";
+            Selection.activeObject = uiPointer;
         }
     }
     [MenuItem("GameObject/Royo Games/UI/AnimatedButton", false, 0)]
@@ -43,7 +49,9 @@ public class UIMenuItems : MonoBehaviour
     {
         if (Selection.activeGameObject != null)
         {
-            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/Animated Button"), Selection.activeGameObject.transform);
+            GameObject animatedButton = Instantiate(Resources.Load<GameObject>("RoyoGames UI Elements/Animated Button"), Selection.activeGameObject.transform);
+            animatedButton.name = "Animated Button";
+            Selection.activeObject = animatedButton;
         }
     }
     [MenuItem("GameObject/Royo Games/UI/AnimatedToggle", false, 0)]
@@ -51,7 +59,9 @@ public class UIMenuItems : MonoBehaviour
     {
         if (Selection.activeGameObject != null)
         {
-            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/Animated Toggle"), Selection.activeGameObject.transform);
+            GameObject animatedToggle = Instantiate(Resources.Load<GameObject>("RoyoGames UI Elements/Animated Toggle"), Selection.activeGameObject.transform);
+            animatedToggle.name = "Animated Toggle";
+            Selection.activeObject = animatedToggle;
         }
     }
     [MenuItem("GameObject/Royo Games/UI/Joystick", false, 0)]
@@ -59,7 +69,9 @@ public class UIMenuItems : MonoBehaviour
     {
         if (Selection.activeGameObject != null)
         {
-            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/Joystick"), Selection.activeGameObject.transform);
+            GameObject joystick = Instantiate(Resources.Load<GameObject>("RoyoGames UI Elements/Joystick"), Selection.activeGameObject.transform);
+            joystick.name = "Joystick";
+            Selection.activeObject = joystick;
         }
     }
     [MenuItem("GameObject/Royo Games/UI/DragPad", false, 0)]
@@ -67,14 +79,16 @@ public class UIMenuItems : MonoBehaviour
     {
         if (Selection.activeGameObject != null)
         {
-            Selection.activeObject = Instantiate(Resources.Load("RoyoGames UI Elements/Drag Pad"), Selection.activeGameObject.transform);
+            GameObject dragPad = Instantiate(Resources.Load<GameObject>("RoyoGames UI Elements/Drag Pad"), Selection.activeGameObject.transform);
+            dragPad.name = "Drag Pad";
+            Selection.activeObject = dragPad;
         }
     }
     private static void AddComponenetsSelectedObjects<T>() where T : Component
     {
         foreach (var item in Selection.objects)
         {
-            if(item is GameObject)
+            if (item is GameObject)
             {
                 (item as GameObject).AddComponent<T>();
             }

@@ -40,7 +40,7 @@ public class HUDElement : MonoBehaviour
         canvasRect = canvas.GetComponent<RectTransform>();
     }
 
-    public virtual void LateUpdate()
+    public virtual void Update()
     {
         Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(_worldCamera, _target.position + _targetOffset);
 

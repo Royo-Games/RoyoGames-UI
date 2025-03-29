@@ -1,30 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class UIUtility
 {
     public static void ClampRect(RectTransform parentRect, RectTransform rect)
     {
-        ClampRect(parentRect, rect, Vector2.zero);
+        ClamVieport(parentRect, rect, Vector2.zero);
     }
-    public static void ClampRect(RectTransform canvasRect, RectTransform rect, Vector2 offset)
+    public static Vector2 ClamVieport(this RectTransform rect, RectTransform vieportRect, Vector2 padding)
     {
-        var position = rect.anchoredPosition;
+        Vector2 position = rect.anchoredPosition;
 
-        Vector2 anchorOffset = canvasRect.sizeDelta * (rect.anchorMin - Vector2.one / 2);
+        Vector2 scale = new Vector2(rect.localScale.x, rect.localScale.y);
+        Vector2 scaledSize = new Vector2(rect.sizeDelta.x * scale.x, rect.sizeDelta.y * scale.y);
 
-        Vector2 maxPivotOffset = rect.sizeDelta * (rect.pivot - (Vector2.one / 2) * 2);
-        Vector2 minPivotOffset = rect.sizeDelta * ((Vector2.one / 2) * 2 - rect.pivot);
+        Vector2 anchorOffset = vieportRect.sizeDelta * (rect.anchorMin - Vector2.one * 0.5f);
 
-        float minX = (canvasRect.sizeDelta.x) * -0.5f - anchorOffset.x - minPivotOffset.x + rect.sizeDelta.x;
-        float maxX = (canvasRect.sizeDelta.x) * 0.5f - anchorOffset.x + maxPivotOffset.x;
-        float minY = (canvasRect.sizeDelta.y) * -0.5f - anchorOffset.y - minPivotOffset.y + rect.sizeDelta.y;
-        float maxY = (canvasRect.sizeDelta.y) * 0.5f - anchorOffset.y + maxPivotOffset.y;
+        Vector2 maxPivotOffset = scaledSize * (rect.pivot - Vector2.one);
+        Vector2 minPivotOffset = scaledSize * (Vector2.one - rect.pivot);
 
-        position.x = Mathf.Clamp(position.x, minX - offset.x, maxX + offset.x);
-        position.y = Mathf.Clamp(position.y, minY - offset.y, maxY + offset.y);
+        float minX = vieportRect.sizeDelta.x * -0.5f - anchorOffset.x - minPivotOffset.x + scaledSize.x;
+        float maxX = vieportRect.sizeDelta.x * 0.5f - anchorOffset.x + maxPivotOffset.x;
+        float minY = vieportRect.sizeDelta.y * -0.5f - anchorOffset.y - minPivotOffset.y + scaledSize.y;
+        float maxY = vieportRect.sizeDelta.y * 0.5f - anchorOffset.y + maxPivotOffset.y;
 
-        rect.anchoredPosition = position;
+        position.x = Mathf.Clamp(position.x, minX + padding.x, maxX - padding.x);
+        position.y = Mathf.Clamp(position.y, minY + padding.y, maxY - padding.y);
+
+        return position;
     }
+
+    public static bool IsRectangleOutsideViewport(this RectTransform rectTransform, Canvas canvas, RectTransform vieportRect)
+    {
+        Vector3[] corners = new Vector3[4];
+        rectTransform.GetWorldCorners(corners);
+
+        RectTransform canvasRect = (RectTransform)canvas.transform;
+
+        Camera camera = null;
+
+        switch (canvas.renderMode)
+        {
+            case RenderMode.ScreenSpaceCamera:
+            case RenderMode.WorldSpace:
+                camera = canvas.worldCamera;
+                break;
+        }
+
+        foreach (var corner in corners)
+        {
+            Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(camera, corner);
+
+            if (RectTransformUtility.RectangleContainsScreenPoint(vieportRect, screenPoint, camera))
+                return false;
+        }
+
+        return true;
+    }
+
 }

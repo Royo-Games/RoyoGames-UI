@@ -173,7 +173,7 @@ CanvasGroup:
   m_IgnoreParentGroups: 0
 --- !u!95 &3116244086207964786
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -187,6 +187,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -207,7 +208,7 @@ MonoBehaviour:
   editMode: 0
   showTrigger: Fade In
   showSpeed: 1
-  hideTrigger: Fade In
+  hideTrigger: Fade Out
   hideSpeed: 1
   onBeginShow:
     m_PersistentCalls:

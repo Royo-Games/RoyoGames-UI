@@ -98,7 +98,6 @@ public class UIHudElement : MonoBehaviour
         if (_enableAutoScale)
             AutoScale();
 
-
         if (_enableClamp)
             Clamp(vieportRect, rect);
         else
@@ -130,7 +129,6 @@ public class UIHudElement : MonoBehaviour
         {
             IsOutsideViewport = isOutsideViewport;
             OnChangedOutsideVieportEvent?.Invoke(isOutsideViewport);
-            Debug.Log("Outside Viewport : " + IsOutsideViewport);
         }
     }
 
@@ -145,7 +143,6 @@ public class UIHudElement : MonoBehaviour
         {
             IsClamping = isClamping;
             OnChangedClampStateEvent?.Invoke(isClamping);
-            Debug.Log("ChangedClamp : "+isClamping);
         }
     }
 }

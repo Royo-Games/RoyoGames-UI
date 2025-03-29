@@ -206,9 +206,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editMode: 0
-  showTrigger: Fade In
+  showTrigger: FadeIn
   showSpeed: 1
-  hideTrigger: Fade Out
+  hideTrigger: FadeOut
   hideSpeed: 1
   onBeginShow:
     m_PersistentCalls:

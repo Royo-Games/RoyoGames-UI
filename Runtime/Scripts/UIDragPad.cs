@@ -3,16 +3,16 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 [DefaultExecutionOrder(1000)]
-public class DragPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class UIDragPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     [Space]
-    [SerializeField] UnityEvent<DragPad> _onDragDownEvent;
-    [SerializeField] UnityEvent<DragPad> _onDragUpEvent;
-    [SerializeField] UnityEvent<DragPad> _onDraggingEvent;
+    [SerializeField] UnityEvent<UIDragPad> _onDragDownEvent;
+    [SerializeField] UnityEvent<UIDragPad> _onDragUpEvent;
+    [SerializeField] UnityEvent<UIDragPad> _onDraggingEvent;
 
-    public UnityEvent<DragPad> OnDragDownEvent => _onDragDownEvent;
-    public UnityEvent<DragPad> OnDragUpEvent => _onDragUpEvent;
-    public UnityEvent<DragPad> OnDraggingEvent => _onDraggingEvent;
+    public UnityEvent<UIDragPad> OnDragDownEvent => _onDragDownEvent;
+    public UnityEvent<UIDragPad> OnDragUpEvent => _onDragUpEvent;
+    public UnityEvent<UIDragPad> OnDraggingEvent => _onDraggingEvent;
 
     public Vector2 Delta { get; private set; }
     public Vector2 TotalDelta { get; private set; }

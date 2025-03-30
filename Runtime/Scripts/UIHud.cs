@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class UIHudElement : MonoBehaviour
+public class UIHud : MonoBehaviour
 {
     [SerializeField] private Camera _worldCamera;
 

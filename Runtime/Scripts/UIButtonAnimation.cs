@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
-public class ButtonAnimation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class UIButtonAnimation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private string downTrigger;
     [SerializeField] private string overTrigger;

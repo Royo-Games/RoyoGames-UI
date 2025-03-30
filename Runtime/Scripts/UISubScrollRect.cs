@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.EventSystems;
 
-public class SubScrollRect : ScrollRect
+public class UISubScrollRect : ScrollRect
 {
     private bool routeToParent = false;
 

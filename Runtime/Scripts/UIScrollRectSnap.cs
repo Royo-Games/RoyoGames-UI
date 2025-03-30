@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class ScrollRectSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class UIScrollRectSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public bool IsDragging { get; private set; }
     public int CurrentElementIndex

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
-public class ToggleSwitchAnimation : MonoBehaviour
+public class UIToggleSwitchAnimation : MonoBehaviour
 {
     private Toggle toggle;
     private Animator animator;

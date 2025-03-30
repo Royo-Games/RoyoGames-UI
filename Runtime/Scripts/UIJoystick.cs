@@ -24,7 +24,7 @@ public enum JoystickVisibility
 }
 
 [DefaultExecutionOrder(1000)]
-public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class UIJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     [Header("Settings")]
     [SerializeField] JoystickType _joystickType = JoystickType.Fixed;
@@ -40,9 +40,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     [SerializeField] RectTransform _handle;
 
     [Header("Events")]
-    [SerializeField] UnityEvent<Joystick> _onDragDownEvent;
-    [SerializeField] UnityEvent<Joystick> _onDragUpEvent;
-    [SerializeField] UnityEvent<Joystick> _onDraggingEvent;
+    [SerializeField] UnityEvent<UIJoystick> _onDragDownEvent;
+    [SerializeField] UnityEvent<UIJoystick> _onDragUpEvent;
+    [SerializeField] UnityEvent<UIJoystick> _onDraggingEvent;
 
     public Vector2 Direction { get; private set; }
     public Vector2 Delta { get; private set; }
@@ -52,9 +52,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     public bool IsDragUp { get; private set; }
     public bool IsDragging { get; private set; }
 
-    public UnityEvent<Joystick> OnDragDownEvent => _onDragDownEvent;
-    public UnityEvent<Joystick> OnDragUpEvent => _onDragUpEvent;
-    public UnityEvent<Joystick> OnDraggingEvent => _onDraggingEvent;
+    public UnityEvent<UIJoystick> OnDragDownEvent => _onDragDownEvent;
+    public UnityEvent<UIJoystick> OnDragUpEvent => _onDragUpEvent;
+    public UnityEvent<UIJoystick> OnDraggingEvent => _onDraggingEvent;
 
     private Vector2 _startPosition;
     private Camera _cam;

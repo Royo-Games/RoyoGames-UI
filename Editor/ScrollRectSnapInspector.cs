@@ -1,14 +1,14 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ScrollRectSnap))]
+[CustomEditor(typeof(UIScrollRectSnap))]
 public class ScrollRectSnapInspector : Editor
 {
-    private ScrollRectSnap scrollRectSnap;
+    private UIScrollRectSnap scrollRectSnap;
 
     private void OnEnable()
     {
-        scrollRectSnap = target as ScrollRectSnap;
+        scrollRectSnap = target as UIScrollRectSnap;
         scrollRectSnap.UpdateItemList();
     }
     public override void OnInspectorGUI()

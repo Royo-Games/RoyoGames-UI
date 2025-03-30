@@ -1,10 +1,10 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(UIHudElement))]
+[CustomEditor(typeof(UIHud))]
 public class UIHudElementInspector : Editor
 {
-    private UIHudElement _uiHudElement;
+    private UIHud _uiHudElement;
 
     private SerializedProperty _worldCameraProperty;
     private SerializedProperty _targetProperty;
@@ -17,7 +17,7 @@ public class UIHudElementInspector : Editor
 
     private void OnEnable()
     {
-        _uiHudElement = (UIHudElement)target;
+        _uiHudElement = (UIHud)target;
         _worldCameraProperty = serializedObject.FindProperty("_worldCamera");
         _targetProperty = serializedObject.FindProperty("_target");
         _targetOfsetProperty = serializedObject.FindProperty("_targetOffset");

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class VersionText : MonoBehaviour
+public class UIVersionText : MonoBehaviour
 {
     private void Awake()
     {

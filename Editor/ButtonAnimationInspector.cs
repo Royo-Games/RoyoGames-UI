@@ -4,16 +4,16 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
-[CustomEditor(typeof(ButtonAnimation))]
+[CustomEditor(typeof(UIButtonAnimation))]
 public class ButtonAnimationInspector : Editor
 {
-    private ButtonAnimation buttonAnimation;
+    private UIButtonAnimation buttonAnimation;
     private StringArrayPopupProperty downTriggerProperty;
     private StringArrayPopupProperty upTriggerProperty;
 
     private void OnEnable()
     {
-        buttonAnimation = (ButtonAnimation)target;
+        buttonAnimation = (UIButtonAnimation)target;
         InitTriggerProperties();
     }
     private void InitTriggerProperties()

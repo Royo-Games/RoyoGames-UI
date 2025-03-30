@@ -2,20 +2,20 @@ using System;
 using UnityEngine;
 
 [ExecuteInEditMode()]
-[RequireComponent(typeof(ScrollRectSnap))]
-public class ScrollRectSnapScaleEffect : MonoBehaviour
+[RequireComponent(typeof(UIScrollRectSnap))]
+public class UIScrollRectSnapScaleEffect : MonoBehaviour
 {
     [Range(0.0f, 1.0f)]
     [SerializeField] private float minScale = 0.5f;
     [SerializeField] private float scaleFactor = 1.0f;
 
-    private ScrollRectSnap scrollRectSnap;
-    public ScrollRectSnap ScrollRectSnap
+    private UIScrollRectSnap scrollRectSnap;
+    public UIScrollRectSnap ScrollRectSnap
     {
         get
         {
             if (scrollRectSnap == null)
-                scrollRectSnap = GetComponentInParent<ScrollRectSnap>();
+                scrollRectSnap = GetComponentInParent<UIScrollRectSnap>();
 
             return scrollRectSnap;
         }

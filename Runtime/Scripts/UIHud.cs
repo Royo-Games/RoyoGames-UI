@@ -129,6 +129,7 @@ public class UIHud : MonoBehaviour
         {
             IsOutsideViewport = isOutsideViewport;
             OnChangedOutsideVieportEvent?.Invoke(isOutsideViewport);
+            OnChangedOutsideVieport(isOutsideViewport);
         }
     }
 
@@ -144,5 +145,13 @@ public class UIHud : MonoBehaviour
             IsClamping = isClamping;
             OnChangedClampStateEvent?.Invoke(isClamping);
         }
+    }
+
+    protected virtual void OnChangedOutsideVieport(bool isOutsideViewport)
+    {
+    }
+
+    protected virtual void OnChangedClampState(bool isClamping)
+    {
     }
 }

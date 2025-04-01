@@ -86,14 +86,16 @@ public class UIHud : MonoBehaviour
 
         if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
         {
-            transform.position = screenPoint + TargetOffset;
+            transform.position = screenPoint;
         }
         else
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(vieportRect, screenPoint,
                 canvas.renderMode == RenderMode.ScreenSpaceCamera ? _worldCamera : null, out Vector2 localPoint);
-            rect.localPosition = localPoint + TargetOffset;
+            rect.localPosition = localPoint;
         }
+
+        rect.anchoredPosition += TargetOffset;
 
         if (_enableAutoScale)
             AutoScale();

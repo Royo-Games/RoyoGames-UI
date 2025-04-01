@@ -73,14 +73,14 @@ public class UIHud : MonoBehaviour
         set => _minScale = value;
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         rect = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
         vieportRect = transform.parent.GetComponent<RectTransform>();
     }
 
-    public virtual void Update()
+    protected virtual void Update()
     {
         Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(_worldCamera, _target.position + _targetOffset);
 

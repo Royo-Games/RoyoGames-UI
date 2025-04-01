@@ -6,7 +6,7 @@ public class UIHud : MonoBehaviour
     [SerializeField] private Camera _worldCamera;
 
     [SerializeField] private Transform _target;
-    [SerializeField] private Vector3 _targetOffset;
+    [SerializeField] private Vector2 _targetOffset;
 
     [SerializeField] private bool _enableClamp;
     [SerializeField] private Vector2 _clampPadding;
@@ -37,7 +37,7 @@ public class UIHud : MonoBehaviour
         set => _worldCamera = value;
     }
 
-    public Vector3 TargetOffset
+    public Vector2 TargetOffset
     {
         get => _targetOffset;
         set => _targetOffset = value;
@@ -82,17 +82,17 @@ public class UIHud : MonoBehaviour
 
     protected virtual void Update()
     {
-        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(_worldCamera, _target.position + _targetOffset);
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(_worldCamera, _target.position);
 
         if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
         {
-            transform.position = screenPoint;
+            transform.position = screenPoint + TargetOffset;
         }
         else
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(vieportRect, screenPoint,
                 canvas.renderMode == RenderMode.ScreenSpaceCamera ? _worldCamera : null, out Vector2 localPoint);
-            rect.localPosition = localPoint;
+            rect.localPosition = localPoint + TargetOffset;
         }
 
         if (_enableAutoScale)

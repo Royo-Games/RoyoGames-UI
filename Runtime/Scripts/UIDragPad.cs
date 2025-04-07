@@ -28,19 +28,19 @@ public class UIDragPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         IsDragging = false;
         IsDragUp = false;
     }
-    public void OnPointerDown(PointerEventData eventData)
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
         IsDragDown = true;
         _onDragDownEvent?.Invoke(this);
     }
-    public void OnDrag(PointerEventData eventData)
+    public virtual void OnDrag(PointerEventData eventData)
     {
         IsDragging = true;
-        Delta = eventData.delta;
+        Delta += eventData.delta;
         TotalDelta += Delta;
         OnDraggingEvent?.Invoke(this);
     }
-    public void OnPointerUp(PointerEventData eventData)
+    public virtual void OnPointerUp(PointerEventData eventData)
     {
         IsDragUp = true;
         _onDragUpEvent?.Invoke(this);

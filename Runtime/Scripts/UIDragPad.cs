@@ -14,12 +14,12 @@ public class UIDragPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     public UnityEvent<UIDragPad> OnDragUpEvent => _onDragUpEvent;
     public UnityEvent<UIDragPad> OnDraggingEvent => _onDraggingEvent;
 
-    public Vector2 Delta { get; private set; }
-    public Vector2 TotalDelta { get; private set; }
+    public Vector2 Delta { get; protected set; }
+    public Vector2 TotalDelta { get; protected set; }
 
-    public bool IsDragDown { get; private set; }
-    public bool IsDragUp { get; private set; }
-    public bool IsDragging { get; private set; }
+    public bool IsDragDown { get; protected set; }
+    public bool IsDragUp { get; protected set; }
+    public bool IsDragging { get; protected set; }
 
     public virtual void LateUpdate()
     {

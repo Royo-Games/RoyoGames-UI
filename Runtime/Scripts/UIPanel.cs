@@ -16,6 +16,27 @@ public class UIPanel : MonoBehaviour
     public UIPanelState State => state;
     public bool IsShow => state == UIPanelState.BeginShow || state == UIPanelState.EndShow;
 
+    private int showCounter;
+    public int ShowCounter
+    {
+        get => showCounter;
+        set
+        {
+            showCounter = value;
+
+            if (showCounter >= 1)
+            {
+                if (!IsShow)
+                    Show();
+            }
+            else
+            {
+                if (IsShow)
+                    Hide();
+            }
+        }
+    }
+
     public string ShowTriggerName
     {
         get { return showTrigger; }
@@ -63,6 +84,14 @@ public class UIPanel : MonoBehaviour
         animator.enabled = false;
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0;
+    }
+    public void IncreaseShowCounter()
+    {
+        ShowCounter++;
+    }
+    public void DecreaseShowCounter()
+    {
+        ShowCounter--;
     }
     public void Show(float delay = 0)
     {

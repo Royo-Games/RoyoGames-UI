@@ -19,13 +19,12 @@ public class UIDragPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public bool IsDragDown { get; protected set; }
     public bool IsDragUp { get; protected set; }
-    public bool IsDragging { get; protected set; }
+    public bool IsDragging => Delta.magnitude > 0;
 
     public virtual void LateUpdate()
     {
         Delta = Vector2.zero;
         IsDragDown = false;
-        IsDragging = false;
         IsDragUp = false;
     }
     public virtual void OnPointerDown(PointerEventData eventData)
@@ -35,7 +34,6 @@ public class UIDragPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     }
     public virtual void OnDrag(PointerEventData eventData)
     {
-        IsDragging = true;
         Delta += eventData.delta;
         TotalDelta += Delta;
         OnDraggingEvent?.Invoke(this);

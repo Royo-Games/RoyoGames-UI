@@ -43,6 +43,7 @@ public class UIDragPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     {
         IsDragUp = true;
         IsDragging = false;
+        TotalDelta = Vector2.zero;
         _onDragUpEvent?.Invoke(this);
     }
 }

@@ -22,7 +22,16 @@ public class UIPointerInspector : Editor
     }
     private void InitTriggerProperties()
     {
-        AnimatorController animatorController = pointer.GetComponent<Animator>().runtimeAnimatorController as AnimatorController;
+        Animator animator = pointer.GetComponent<Animator>();
+        RuntimeAnimatorController runtimeAnimatorController = animator.runtimeAnimatorController;
+        AnimatorController animatorController = runtimeAnimatorController as AnimatorController;
+
+        if (animatorController == null)
+        {
+            AnimatorOverrideController overrideController = runtimeAnimatorController as AnimatorOverrideController;
+            if (overrideController != null)
+                animatorController = overrideController.runtimeAnimatorController as AnimatorController;
+        }
 
         List<string> trigerList = new();
 

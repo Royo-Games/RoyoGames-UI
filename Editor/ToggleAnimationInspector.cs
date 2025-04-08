@@ -18,7 +18,16 @@ public class ToggleAnimationInspector : Editor
     }
     private void InitTriggerProperties()
     {
-        AnimatorController animatorController = toggleAnimation.GetComponent<Animator>().runtimeAnimatorController as AnimatorController;
+        Animator animator = toggleAnimation.GetComponent<Animator>();
+        RuntimeAnimatorController runtimeAnimatorController = animator.runtimeAnimatorController;
+        AnimatorController animatorController = runtimeAnimatorController as AnimatorController;
+
+        if (animatorController == null)
+        {
+            AnimatorOverrideController overrideController = runtimeAnimatorController as AnimatorOverrideController;
+            if (overrideController != null)
+                animatorController = overrideController.runtimeAnimatorController as AnimatorController;
+        }
 
         List<string> trigerList = new();
 

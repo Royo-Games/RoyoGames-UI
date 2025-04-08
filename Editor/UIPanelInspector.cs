@@ -18,7 +18,16 @@ public class UIPanelInspector : Editor
     }
     private void InitTriggerProperties()
     {
-        AnimatorController animatorController = panel.GetComponent<Animator>().runtimeAnimatorController as AnimatorController;
+        Animator animator = panel.GetComponent<Animator>();
+        RuntimeAnimatorController runtimeAnimatorController = animator.runtimeAnimatorController;
+        AnimatorController animatorController = runtimeAnimatorController as AnimatorController;
+
+        if (animatorController == null)
+        {
+            AnimatorOverrideController overrideController = runtimeAnimatorController as AnimatorOverrideController;
+            if (overrideController != null)
+                animatorController = overrideController.runtimeAnimatorController as AnimatorController;
+        }
 
         List<string> trigerList = new();
 

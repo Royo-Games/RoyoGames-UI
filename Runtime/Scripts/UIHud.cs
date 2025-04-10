@@ -92,6 +92,9 @@ public class UIHud : MonoBehaviour
 
     public virtual void UpdatePosition()
     {
+        if (_worldCamera == null || _target == null)
+            return;
+
         Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(_worldCamera, _target.position);
 
         if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)

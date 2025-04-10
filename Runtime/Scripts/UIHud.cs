@@ -80,7 +80,17 @@ public class UIHud : MonoBehaviour
         vieportRect = transform.parent.GetComponent<RectTransform>();
     }
 
+    protected virtual void OnEnable()
+    {
+        UpdatePosition();
+    }
+
     protected virtual void Update()
+    {
+        UpdatePosition();
+    }
+
+    public virtual void UpdatePosition()
     {
         Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(_worldCamera, _target.position);
 

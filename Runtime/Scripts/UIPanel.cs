@@ -85,11 +85,11 @@ public class UIPanel : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0;
     }
-    public void RequestShow()
+    public void ShowRequest()
     {
         ShowCounter++;
     }
-    public void RequestHide()
+    public void HideRequest()
     {
         ShowCounter--;
     }

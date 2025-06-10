@@ -1284,7 +1284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textAsset: {fileID: 4900000, guid: 7ababf27b0f27e74e8c419d130c68c80, type: 3}
   defaultLanguage: 10
-  autoLoad: 1
+  autoLoad: 0
 --- !u!4 &2002468692
 Transform:
   m_ObjectHideFlags: 0

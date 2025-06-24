@@ -77,7 +77,9 @@ public class LanguageManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         if (autoLoad)
+        {
             Load();
+        }
     }
 
     private void OnDestroy()
@@ -119,6 +121,10 @@ public class LanguageManager : MonoBehaviour
             return "";
 
         EntityTable.Row row = table.GetRow("Key", key);
+
+        if (row == null)
+            return "";
+
         string value = row.GetValue(currentLanguageName);
 
         if (string.IsNullOrEmpty(value))

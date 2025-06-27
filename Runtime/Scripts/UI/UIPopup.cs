@@ -22,7 +22,17 @@ public class UIPopup : MonoBehaviour
     private UIPanel panel;
     private RectTransform rectTransform;
 
-    public UIPanel Panel => panel;
+    public UIPanel Panel
+    {
+        get
+        {
+            if(panel == null)
+                panel = GetComponent<UIPanel>();
+
+            return panel;
+        }
+    }
+
     public bool AutoClose
     {
         get

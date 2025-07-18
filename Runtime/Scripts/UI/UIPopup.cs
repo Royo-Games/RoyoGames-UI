@@ -157,7 +157,10 @@ public class UIPopup : MonoBehaviour
     {
         if (panel.IsShow)
         {
-            if (autoClose && Input.GetMouseButton(0) && !RectTransformUtility.RectangleContainsScreenPoint(body, Input.mousePosition))
+            if (autoClose && Input.GetMouseButton(0) 
+                && !RectTransformUtility.RectangleContainsScreenPoint(body,
+                Input.mousePosition,
+                canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera))
             {
                 Hide();
             }

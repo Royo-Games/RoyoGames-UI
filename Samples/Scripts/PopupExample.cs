@@ -11,7 +11,7 @@ public class PopupExample : MonoBehaviour
 
     public void OpenPopup()
     {
-        popup.SetPositionByWorld(Cube.position, 65, Camera.main);
+        popup.SetPosition(popupPoint.position, 65);
         popup.Show();
     }
 }

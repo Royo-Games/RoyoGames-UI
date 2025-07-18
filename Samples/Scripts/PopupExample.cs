@@ -9,6 +9,7 @@ public class PopupExample : MonoBehaviour
 
     public void OpenPopup()
     {
-        popup.Show(popupPoint.position, 65);
+        popup.SetPosition(popupPoint.position, 65);
+        popup.Show();
     }
 }

@@ -26,7 +26,7 @@ public class UIPopup : MonoBehaviour
     {
         get
         {
-            if(panel == null)
+            if (panel == null)
                 panel = GetComponent<UIPanel>();
 
             return panel;
@@ -104,10 +104,13 @@ public class UIPopup : MonoBehaviour
     private RectTransform currentArrow;
     private UIPopupDirection currentDirection;
     private bool isChanged;
+    private Canvas canvas;
 
     private void Awake()
     {
         panel = GetComponent<UIPanel>();
+        canvas = GetComponentInParent<Canvas>();
+
         panel.OnBeginShow.AddListener(OnPanelOpen);
         panel.OnBeginHide.AddListener(OnPanelClose);
 
@@ -128,17 +131,24 @@ public class UIPopup : MonoBehaviour
         if (Application.isPlaying)
             isChanged = true;
     }
-    public void Show(Vector2 position)
+  
+    public void Show()
     {
-        Show(position, offset);
+        panel.Show();
     }
-    public void Show(Vector2 position, float offset)
+
+    public void SetPosition(Vector2 position, float offset)
     {
         this.offset = offset;
         this.position = position;
         UpdatePopupPosition();
-        panel.Show();
     }
+
+    public void SetPositionByWorld(Vector2 worldPos, float offset, Camera worldCamera)
+    {
+        SetPosition(UIUtility.WorldToCanvasPosition(worldPos, canvas, worldCamera), offset);
+    }
+
     public void Hide(float delay = 0)
     {
         panel.Hide(delay);

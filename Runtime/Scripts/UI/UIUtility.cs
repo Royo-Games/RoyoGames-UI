@@ -57,32 +57,10 @@ public static class UIUtility
         return true;
     }
 
-    public static Vector3 WorldToCanvasPosition(Vector3 worldPos, Canvas canvas, Camera worldCam)
+    public static Vector3 WorldToUIPosition(Vector3 worldPos, Canvas canvas, Camera worldCam)
     {
-        Vector3 screenPos = RectTransformUtility.WorldToScreenPoint(worldCam, worldPos);
-
-        if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
-        {
-            float sf = canvas.scaleFactor;
-            return new Vector3(screenPos.x / sf, screenPos.y / sf, 0f);
-        }
-
-        RectTransform canvasRect = canvas.transform as RectTransform;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRect,
-            screenPos,
-            canvas.worldCamera,
-            out Vector2 localPoint
-        );
-
-        if (canvas.renderMode == RenderMode.WorldSpace)
-        {
-            Vector3 worldOnCanvas = canvas.transform.TransformPoint(localPoint);
-            worldOnCanvas.z = canvas.transform.position.z;
-            return worldOnCanvas;
-        }
-
-        return new Vector3(localPoint.x, localPoint.y, 0f);
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(worldCam, worldPos);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)canvas.transform, screenPoint, canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera, out Vector2 result);
+        return canvas.transform.TransformPoint(result);
     }
-
 }

@@ -7,9 +7,11 @@ public class PopupExample : MonoBehaviour
     [SerializeField] UIPopup popup;
     [SerializeField] RectTransform popupPoint;
 
+    public Transform Cube;
+
     public void OpenPopup()
     {
-        popup.SetPosition(popupPoint.position, 65);
+        popup.SetPositionByWorld(Cube.position, 65, Camera.main);
         popup.Show();
     }
 }

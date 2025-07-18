@@ -144,9 +144,9 @@ public class UIPopup : MonoBehaviour
         UpdatePopupPosition();
     }
 
-    public void SetPositionByWorld(Vector2 worldPos, float offset, Camera worldCamera)
+    public void SetPositionByWorld(Vector3 worldPos, float offset, Camera worldCamera)
     {
-        SetPosition(UIUtility.WorldToCanvasPosition(worldPos, canvas, worldCamera), offset);
+        SetPosition(UIUtility.WorldToUIPosition(worldPos, canvas, worldCamera), offset);
     }
 
     public void Hide(float delay = 0)
@@ -197,7 +197,6 @@ public class UIPopup : MonoBehaviour
 
         body.localPosition = ClampPosition(pointPosition, body, rectTransform);
         UpdateArrowPosition(currentDirection);
-
     }
     private void UpdateArrowPosition(UIPopupDirection direction)
     {

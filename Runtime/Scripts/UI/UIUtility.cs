@@ -63,4 +63,31 @@ public static class UIUtility
         RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)canvas.transform, screenPoint, canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera, out Vector2 result);
         return canvas.transform.TransformPoint(result);
     }
+
+    public static Vector3 UIToWorldPosition(Vector3 uiWorldPos, Canvas canvas, Camera worldCam, float targetZ = 0)
+    {
+        Vector2 screenPoint;
+        if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+        {
+            screenPoint = new Vector2(uiWorldPos.x, uiWorldPos.y);
+        }
+        else
+        {
+            screenPoint = RectTransformUtility.WorldToScreenPoint(
+                canvas.worldCamera,
+                uiWorldPos
+            );
+        }
+
+        Ray ray = worldCam.ScreenPointToRay(screenPoint);
+
+        Plane plane = new Plane(Vector3.forward, new Vector3(0, 0, targetZ));
+
+        if (plane.Raycast(ray, out float enter))
+        {
+            return ray.GetPoint(enter);
+        }
+
+        return Vector3.zero;
+    }
 }

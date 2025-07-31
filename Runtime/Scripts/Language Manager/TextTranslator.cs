@@ -12,9 +12,6 @@ public class TextTranslator : MonoBehaviour
         }
         set
         {
-            if (key == value)
-                return;
-
             key = value;
             Translate(true);
         }

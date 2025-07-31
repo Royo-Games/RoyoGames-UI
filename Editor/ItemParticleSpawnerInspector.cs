@@ -2,7 +2,7 @@ using RoyoGames.UI;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ItemParticleSpawner))]
+[CustomEditor(typeof(ItemParticleSpawner), true)]
 public class ItemParticleSpawnerInspector : Editor
 {
     private ItemParticleSpawner spawner;
@@ -60,7 +60,7 @@ public class ItemParticleSpawnerInspector : Editor
 
         EditorGUILayout.PropertyField(sprayDirectionProperty);
 
-        if(spawner.SprayDirection != ItemParticleSpawner.SprayDirections.None)
+        if (spawner.SprayDirection != ItemParticleSpawner.SprayDirections.None)
         {
             EditorGUILayout.PropertyField(sprayDurationProperty);
             DrawMinMaxProperty("Spray Radius", minSprayRadiusProperty, maxSprayRadiusProperty);

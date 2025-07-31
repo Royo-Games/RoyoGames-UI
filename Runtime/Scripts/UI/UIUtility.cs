@@ -4,7 +4,7 @@ public static class UIUtility
 {
     public static void ClampRect(RectTransform parentRect, RectTransform rect)
     {
-        rect.anchoredPosition = ClamVieport(parentRect, rect, Vector2.zero);
+        rect.position = ClamVieport(parentRect, rect, Vector2.zero);
     }
     public static Vector2 ClamVieport(this RectTransform rect, RectTransform vieportRect, Vector2 padding)
     {

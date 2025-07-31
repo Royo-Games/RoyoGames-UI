@@ -148,7 +148,7 @@ public class UIHud : MonoBehaviour
 
     protected virtual void Clamp(RectTransform canvasRect, RectTransform rect)
     {
-        Vector2 newPos = rect.ClamVieport(vieportRect, _clampPadding);
+        Vector2 newPos = rect.Clamp(vieportRect, _clampPadding);
         bool isClamping = newPos != rect.anchoredPosition;
 
         rect.anchoredPosition = newPos;

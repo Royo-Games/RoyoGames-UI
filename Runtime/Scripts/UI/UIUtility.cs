@@ -2,31 +2,31 @@ using UnityEngine;
 
 public static class UIUtility
 {
-    public static void ClampRect(RectTransform parentRect, RectTransform rect)
+    public static Vector2 Clamp(this RectTransform rect, RectTransform vieportRect)
     {
-        rect.anchoredPosition = ClamVieport(parentRect, rect, Vector2.zero);
+        return Clamp(rect, vieportRect, Vector2.zero);
     }
-    public static Vector2 ClamVieport(this RectTransform rect, RectTransform vieportRect, Vector2 padding)
+
+    public static Vector2 Clamp(this RectTransform rect, RectTransform vieportRect, Vector2 padding)
     {
-        Vector2 position = rect.anchoredPosition;
+        Vector2 parentSize = vieportRect.rect.size;
+        Vector2 childSize = rect.rect.size;
+        Vector2 scaledChildSize = Vector2.Scale(childSize, rect.localScale);
 
-        Vector2 scale = new Vector2(rect.localScale.x, rect.localScale.y);
-        Vector2 scaledSize = new Vector2(rect.sizeDelta.x * scale.x, rect.sizeDelta.y * scale.y);
+        float pivotOffsetMinX = scaledChildSize.x * rect.pivot.x;
+        float pivotOffsetMaxX = scaledChildSize.x * (1 - rect.pivot.x);
+        float pivotOffsetMinY = scaledChildSize.y * rect.pivot.y;
+        float pivotOffsetMaxY = scaledChildSize.y * (1 - rect.pivot.y);
 
-        Vector2 anchorOffset = vieportRect.sizeDelta * (rect.anchorMin - Vector2.one * 0.5f);
+        float minX = -parentSize.x * 0.5f + pivotOffsetMinX + padding.x;
+        float maxX = parentSize.x * 0.5f - pivotOffsetMaxX - padding.x;
+        float minY = -parentSize.y * 0.5f + pivotOffsetMinY + padding.y;
+        float maxY = parentSize.y * 0.5f - pivotOffsetMaxY - padding.y;
 
-        Vector2 maxPivotOffset = scaledSize * (rect.pivot - Vector2.one);
-        Vector2 minPivotOffset = scaledSize * (Vector2.one - rect.pivot);
-
-        float minX = vieportRect.sizeDelta.x * -0.5f - anchorOffset.x - minPivotOffset.x + scaledSize.x;
-        float maxX = vieportRect.sizeDelta.x * 0.5f - anchorOffset.x + maxPivotOffset.x;
-        float minY = vieportRect.sizeDelta.y * -0.5f - anchorOffset.y - minPivotOffset.y + scaledSize.y;
-        float maxY = vieportRect.sizeDelta.y * 0.5f - anchorOffset.y + maxPivotOffset.y;
-
-        position.x = Mathf.Clamp(position.x, minX + padding.x, maxX - padding.x);
-        position.y = Mathf.Clamp(position.y, minY + padding.y, maxY - padding.y);
-
-        return position;
+        Vector2 pos = rect.anchoredPosition;
+        pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        return pos;
     }
 
     public static bool IsRectangleOutsideViewport(this RectTransform rectTransform, Canvas canvas, RectTransform vieportRect)

@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class CollectibleItemSpawnerExample : MonoBehaviour
 {
-    public UICollectibleItemSpawner spawner;
+    public ItemParticleSpawner spawner;
     public TextMeshProUGUI goldText;
+    public RectTransform target;
 
     private float golds;
 
@@ -17,7 +18,11 @@ public class CollectibleItemSpawnerExample : MonoBehaviour
 
     private IEnumerator ISpawn()
     {
-        spawner.Play(20);
+        float totalGolds = 1000;
+
+        int spawnCount = spawner.Play((int)totalGolds, target.TransformPoint(target.rect.center));
+
+        float goldIncrease = totalGolds / spawnCount;
 
         spawner.OnSpawnedItem((item) => 
         {
@@ -26,7 +31,7 @@ public class CollectibleItemSpawnerExample : MonoBehaviour
 
         spawner.OnArrivedItem((item) =>
         {
-            golds++;
+            golds += goldIncrease;
             goldText.text = golds.ToString();
             Debug.Log("item arived");
         });

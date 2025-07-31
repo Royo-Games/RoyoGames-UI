@@ -1,15 +1,16 @@
 using UnityEngine;
-using static RoyoGames.UI.UICollectibleItemSpawner;
+using static RoyoGames.UI.ItemParticleSpawner;
 
 namespace RoyoGames.UI
 {
-    public class UICollectibleItemObject : MonoBehaviour
+    public class ItemParticleObject : MonoBehaviour
     {
-        private UICollectibleItemSpawner spawner;
+        private ItemParticleSpawner spawner;
 
         private State state;
         private Vector2 startPos;
         private Vector2 targetPos;
+        private Vector2 sprayPos;
         private float elapsedTime;
         private float springAmplitude;
 
@@ -19,8 +20,9 @@ namespace RoyoGames.UI
             Move
         }
 
-        internal void Play(UICollectibleItemSpawner spawner)
+        internal void Play(ItemParticleSpawner spawner, Vector2 targetPos)
         {
+            this.targetPos = targetPos;
             this.spawner = spawner;
 
             if (spawner.SprayDirection != SprayDirections.None)
@@ -54,7 +56,7 @@ namespace RoyoGames.UI
                 float sprayTime = elapsedTime / spawner.SprayDuration;
                 float f = spawner.SprayCurve.Evaluate(sprayTime);
 
-                transform.position = Vector2.Lerp(startPos, targetPos, f);
+                transform.position = Vector2.Lerp(startPos, sprayPos, f);
             }
             else
             {
@@ -74,7 +76,6 @@ namespace RoyoGames.UI
                 Vector2 pos = Vector2.Lerp(startPos, targetPos, f);
                 Vector2 springDir = spawner.SpringDirection == SpringDirections.Horizontal ? Vector2.right : Vector2.up;
 
-                //pos += springDir * Mathf.Sin(t * Mathf.PI) * springAmplitude;
                 pos += springDir * spawner.SpringCurve.Evaluate(t) * springAmplitude;
 
                 transform.position = pos;
@@ -91,14 +92,13 @@ namespace RoyoGames.UI
             elapsedTime = 0;
             state = State.Spray;
             startPos = transform.position;
-            targetPos = transform.position + (GetDirection() * Random.Range(spawner.MinSprayRadius, spawner.MaxSprayRadius));
+            sprayPos = transform.position + (GetDirection() * Random.Range(spawner.MinSprayRadius, spawner.MaxSprayRadius));
         }
 
         private void BeginMove()
         {
             startPos = transform.position;
             elapsedTime = 0;
-            targetPos = spawner.Target.TransformPoint(spawner.Target.rect.center);
             springAmplitude = Random.Range(spawner.MinSpringAmplitude, spawner.MaxSpringAmplitude);
             state = State.Move;
         }

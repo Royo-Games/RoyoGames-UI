@@ -336,14 +336,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: -1681543570349238733, guid: 4dd9fecee918e0c4aba2992dfe82d332, type: 3}
-  maxSpawnCount: 20
-  spawnDuration: 0.5
+  maxSpawnCount: 30
+  spawnDuration: 0.7
   spawnRadius: 0
   sprayDirection: 1
   sprayDuration: 0.5
-  minSprayRadius: 150
-  maxSprayRadius: 200
-  sprayConeAngle: 180
+  minSprayRadius: 100
+  maxSprayRadius: 150
+  sprayConeAngle: 90
   sprayCurve:
     serializedVersion: 2
     m_Curve:
@@ -351,7 +351,7 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: 0
-      outSlope: 2
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -368,7 +368,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  target: {fileID: 1428118238}
   moveDuration: 0.5
   springDirection: 0
   springCurve:
@@ -413,7 +412,7 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: 0
-      outSlope: 2
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -597,6 +596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 723083290}
   goldText: {fileID: 1908340608}
+  target: {fileID: 1428118238}
 --- !u!4 &1424838226
 Transform:
   m_ObjectHideFlags: 0

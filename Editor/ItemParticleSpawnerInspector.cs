@@ -2,10 +2,10 @@ using RoyoGames.UI;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(UICollectibleItemSpawner))]
-public class UICollectibleItemSpawnerInspector : Editor
+[CustomEditor(typeof(ItemParticleSpawner))]
+public class ItemParticleSpawnerInspector : Editor
 {
-    private UICollectibleItemSpawner spawner;
+    private ItemParticleSpawner spawner;
     private SerializedProperty itemPrefabProperty;
     private SerializedProperty maxSpawnCountProperty;
     private SerializedProperty spawnDurationProperty;
@@ -18,7 +18,6 @@ public class UICollectibleItemSpawnerInspector : Editor
     private SerializedProperty sprayConeAngleProperty;
     private SerializedProperty sprayCurveProperty;
 
-    private SerializedProperty targetProperty;
     private SerializedProperty moveDurationProperty;
     private SerializedProperty springDirectionProperty;
     private SerializedProperty springCurveProperty;
@@ -28,7 +27,7 @@ public class UICollectibleItemSpawnerInspector : Editor
 
     private void OnEnable()
     {
-        spawner = target as UICollectibleItemSpawner;
+        spawner = target as ItemParticleSpawner;
 
         itemPrefabProperty = serializedObject.FindProperty("itemPrefab");
         maxSpawnCountProperty = serializedObject.FindProperty("maxSpawnCount");
@@ -42,7 +41,6 @@ public class UICollectibleItemSpawnerInspector : Editor
         sprayConeAngleProperty = serializedObject.FindProperty("sprayConeAngle");
         sprayCurveProperty = serializedObject.FindProperty("sprayCurve");
 
-        targetProperty = serializedObject.FindProperty("target");
         moveDurationProperty = serializedObject.FindProperty("moveDuration");
         springDirectionProperty = serializedObject.FindProperty("springDirection");
         springCurveProperty = serializedObject.FindProperty("springCurve");
@@ -61,12 +59,15 @@ public class UICollectibleItemSpawnerInspector : Editor
         EditorGUILayout.PropertyField(spawnRadiusProperty);
 
         EditorGUILayout.PropertyField(sprayDirectionProperty);
-        EditorGUILayout.PropertyField(sprayDurationProperty);
-        DrawMinMaxProperty("Spray Radius", minSprayRadiusProperty, maxSprayRadiusProperty);
-        EditorGUILayout.PropertyField(sprayConeAngleProperty);
-        EditorGUILayout.PropertyField(sprayCurveProperty);
 
-        EditorGUILayout.PropertyField(targetProperty);
+        if(spawner.SprayDirection != ItemParticleSpawner.SprayDirections.None)
+        {
+            EditorGUILayout.PropertyField(sprayDurationProperty);
+            DrawMinMaxProperty("Spray Radius", minSprayRadiusProperty, maxSprayRadiusProperty);
+            EditorGUILayout.PropertyField(sprayConeAngleProperty);
+            EditorGUILayout.PropertyField(sprayCurveProperty);
+        }
+
         EditorGUILayout.PropertyField(moveDurationProperty);
         EditorGUILayout.PropertyField(springDirectionProperty);
         EditorGUILayout.PropertyField(springCurveProperty);

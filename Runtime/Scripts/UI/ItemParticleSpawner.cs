@@ -5,29 +5,25 @@ using System;
 
 namespace RoyoGames.UI
 {
-    public class UICollectibleItemSpawner : MonoBehaviour
+    public class ItemParticleSpawner : MonoBehaviour
     {
         [Header("Spawn Settings")]
-        [SerializeField] private UICollectibleItemObject itemPrefab;
+        [SerializeField] private ItemParticleObject itemPrefab;
         [SerializeField] private int maxSpawnCount = 20;
-        [SerializeField] private float spawnDuration = 0.5f;
+        [SerializeField] private float spawnDuration = 0.7f;
         [SerializeField] private float spawnRadius = 0;
 
         [Header("Spray Animation Settings")]
         [SerializeField] private SprayDirections sprayDirection = SprayDirections.Random;
-        [SerializeField] private float sprayDuration = 1;
-        [SerializeField] private float minSprayRadius = 50;
-        [SerializeField] private float maxSprayRadius = 100;
+        [SerializeField] private float sprayDuration = 0.5f;
+        [SerializeField] private float minSprayRadius = 100;
+        [SerializeField] private float maxSprayRadius = 150;
         [SerializeField] private float sprayConeAngle = 90;
 
         [SerializeField]
-        private AnimationCurve sprayCurve = new AnimationCurve(
-            new Keyframe(0, 0, 0, 2),
-            new Keyframe(1, 1, 0, 0));
-
+        private AnimationCurve sprayCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
         [Header("Move Animation Settings")]
-        [SerializeField] private RectTransform target;
         [SerializeField] private float moveDuration = 0.5f;
         [SerializeField] private SpringDirections springDirection;
 
@@ -37,13 +33,11 @@ namespace RoyoGames.UI
             new Keyframe(0.5f, 1, 0, 0),
             new Keyframe(1, 0, -5, 0));
 
-        [SerializeField] private float minSpringAmplitude = -100;
-        [SerializeField] private float maxSpringAmplitude = 100;
+        [SerializeField] private float minSpringAmplitude = 0;
+        [SerializeField] private float maxSpringAmplitude = 0;
 
         [SerializeField]
-        private AnimationCurve moveCurve = new AnimationCurve(
-            new Keyframe(0, 0, 0, 2),
-            new Keyframe(1, 1, 0, 0));
+        private AnimationCurve moveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
         public SprayDirections SprayDirection
         {
@@ -79,12 +73,6 @@ namespace RoyoGames.UI
         {
             get => sprayCurve;
             set => sprayCurve = value;
-        }
-
-        public RectTransform Target
-        {
-            get => target;
-            set => target = value;
         }
 
         public float MoveDuration
@@ -125,11 +113,11 @@ namespace RoyoGames.UI
 
         public bool IsPlaying { get; private set; }
 
-        protected Stack<UICollectibleItemObject> pool = new Stack<UICollectibleItemObject>();
-        protected List<UICollectibleItemObject> spawnedItems = new List<UICollectibleItemObject>();
+        protected Stack<ItemParticleObject> pool = new Stack<ItemParticleObject>();
+        protected List<ItemParticleObject> spawnedItems = new List<ItemParticleObject>();
 
-        private Action<UICollectibleItemObject> onArrivedItemEvent;
-        private Action<UICollectibleItemObject> onSpawnedItemEvent;
+        private Action<ItemParticleObject> onArrivedItemEvent;
+        private Action<ItemParticleObject> onSpawnedItemEvent;
         private Action onCompletedEvent;
 
         public enum SprayDirections
@@ -148,33 +136,26 @@ namespace RoyoGames.UI
             Vertical
         }
 
-        protected virtual void Awake()
+        protected virtual ItemParticleObject NewInstance()
         {
-            PreLoad();
+            ItemParticleObject item = Instantiate(itemPrefab, transform);
+            DespawnRaw(item);
+            return item;
         }
 
-        protected virtual void PreLoad()
-        {
-            for (int i = 0; i < maxSpawnCount; i++)
-            {
-                UICollectibleItemObject item = Instantiate(itemPrefab, transform);
-                DespawnRaw(item);
-            }
-        }
-
-        protected virtual void DespawnRaw(UICollectibleItemObject item)
+        protected virtual void DespawnRaw(ItemParticleObject item)
         {
             item.transform.localPosition = Vector3.zero;
             item.gameObject.SetActive(false);
             pool.Push(item);
         }
 
-        public virtual void OnSpawnedItem(Action<UICollectibleItemObject> onSpawnedItem)
+        public virtual void OnSpawnedItem(Action<ItemParticleObject> onSpawnedItem)
         {
             onSpawnedItemEvent = onSpawnedItem;
         }
 
-        public virtual void OnArrivedItem(Action<UICollectibleItemObject> onArrivedItem)
+        public virtual void OnArrivedItem(Action<ItemParticleObject> onArrivedItem)
         {
             onArrivedItemEvent = onArrivedItem;
         }
@@ -184,7 +165,7 @@ namespace RoyoGames.UI
             onCompletedEvent = onCompleted;
         }
 
-        public virtual int Play(int spawnCount)
+        public virtual int Play(int spawnCount, Vector2 targetPos)
         {
             if (IsPlaying)
                 Stop();
@@ -192,20 +173,20 @@ namespace RoyoGames.UI
             IsPlaying = true;
             spawnCount = Mathf.Min(spawnCount, maxSpawnCount);
 
-            StartCoroutine(IPLay(spawnCount));
+            StartCoroutine(IPLay(spawnCount, targetPos));
 
             return spawnCount;
         }
 
-        protected IEnumerator IPLay(int particleCount)
+        protected IEnumerator IPLay(int particleCount, Vector2 targetPos)
         {
             WaitForSeconds spawnDelay = new WaitForSeconds(spawnDuration / particleCount);
 
             for (int i = 0; i < particleCount; i++)
             {
-                UICollectibleItemObject item = Spawn();
+                ItemParticleObject item = Spawn();
                 item.transform.position = (Vector2)transform.position + UnityEngine.Random.insideUnitCircle.normalized * spawnRadius;
-                item.Play(this);
+                item.Play(this, targetPos);
                 onSpawnedItemEvent?.Invoke(item);
                 yield return spawnDelay;
             }
@@ -219,21 +200,24 @@ namespace RoyoGames.UI
             }
         }
 
-        protected virtual UICollectibleItemObject Spawn()
+        protected virtual ItemParticleObject Spawn()
         {
-            UICollectibleItemObject item = pool.Pop();
+            if (pool.Count == 0)
+                NewInstance();
+
+            ItemParticleObject item = pool.Pop();
             item.gameObject.SetActive(true);
             spawnedItems.Add(item);
             item.transform.SetAsFirstSibling();
             return item;
         }
 
-        internal void Despawn(UICollectibleItemObject item)
+        internal void Despawn(ItemParticleObject item)
         {
             spawnedItems.Remove(item);
             DespawnRaw(item);
 
-            if(spawnedItems.Count == 0)
+            if (spawnedItems.Count == 0)
             {
                 IsPlaying = false;
                 onCompletedEvent?.Invoke();
@@ -247,7 +231,7 @@ namespace RoyoGames.UI
 
             for (int i = 0; i < spawnedItems.Count; i++)
             {
-                UICollectibleItemObject item = spawnedItems[i];
+                ItemParticleObject item = spawnedItems[i];
                 DespawnRaw(item);
             }
 
@@ -257,7 +241,7 @@ namespace RoyoGames.UI
             StopAllCoroutines();
         }
 
-        internal void ArrivedItem(UICollectibleItemObject item)
+        internal void ArrivedItem(ItemParticleObject item)
         {
             onArrivedItemEvent?.Invoke(item);
         }

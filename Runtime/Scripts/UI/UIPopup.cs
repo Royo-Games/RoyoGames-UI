@@ -124,7 +124,7 @@ public class UIPopup : MonoBehaviour
         arrows[3] = verticalArrowArea.Find("Arrow Left") as RectTransform;
 
         rectTransform = transform as RectTransform;
-        enabled = false;
+       // enabled = false;
     }
     private void OnValidate()
     {
@@ -139,8 +139,8 @@ public class UIPopup : MonoBehaviour
 
     public void SetPosition(Vector2 position, float offset)
     {
-        this.offset = offset;
-        this.position = position;
+        Offset = offset;
+        Position = position;
         UpdatePopupPosition();
     }
 
@@ -149,10 +149,11 @@ public class UIPopup : MonoBehaviour
         SetPosition(UIUtility.WorldToUIPosition(worldPos, canvas, worldCamera), offset);
     }
 
-    public void Hide(float delay = 0)
+    public void Hide()
     {
-        panel.Hide(delay);
+        panel.Hide();
     }
+
     private void Update()
     {
         if (panel.IsShow)
@@ -166,12 +167,14 @@ public class UIPopup : MonoBehaviour
             }
         }
 
+            UpdatePopupPosition();
+
         if (isChanged)
         {
             isChanged = false;
-            UpdatePopupPosition();
         }
     }
+
     public void UpdatePopupPosition()
     {
         Vector3 pointPosition = rectTransform.InverseTransformPoint(Position);
@@ -277,10 +280,10 @@ public class UIPopup : MonoBehaviour
 
     private void OnPanelOpen()
     {
-        enabled = true;
+        //enabled = true;
     }
     private void OnPanelClose()
     {
-        enabled = false;
+        //enabled = false;
     }
 }

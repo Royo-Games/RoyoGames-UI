@@ -84,7 +84,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 946126838106768875}
-  - component: {fileID: 4364664924369442069}
   - component: {fileID: 946126838106768873}
   - component: {fileID: 946126838106768872}
   - component: {fileID: 6773975624995841425}
@@ -115,28 +114,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &4364664924369442069
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946126838106768876}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d170246fe441d9e4090c796eb01a5213, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 2
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!225 &946126838106768873
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -162,10 +139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editMode: 0
-  showTrigger: SizeIn
-  showSpeed: 1
-  hideTrigger: SizeOut
-  hideSpeed: 1
+  showAnimation: {fileID: 11400000, guid: 711182771700ae544b3832be51c7fdee, type: 2}
+  hideAnimation: {fileID: 11400000, guid: 5458f8bc72ec3bf4f94b4ebde512f283, type: 2}
   onBeginShow:
     m_PersistentCalls:
       m_Calls: []

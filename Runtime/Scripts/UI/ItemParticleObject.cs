@@ -12,7 +12,9 @@ namespace RoyoGames.UI
         private Vector2 targetPos;
         private Vector2 sprayPos;
         private float elapsedTime;
+        private float totalElapsedTime;
         private float springAmplitude;
+        private float totalDuration;
 
         private enum State
         {
@@ -25,8 +27,14 @@ namespace RoyoGames.UI
             this.targetPos = targetPos;
             this.spawner = spawner;
 
+            totalElapsedTime = 0;
+            totalDuration = spawner.MoveDuration;
+
             if (spawner.SprayDirection != SprayDirections.None)
+            {
+                totalDuration += spawner.SprayDuration;
                 BeginSpray();
+            }
             else
                 BeginMove();
 
@@ -35,6 +43,8 @@ namespace RoyoGames.UI
 
         protected virtual void Update()
         {
+            totalElapsedTime += Time.deltaTime;
+
             switch (state)
             {
                 case State.Spray:
@@ -53,10 +63,10 @@ namespace RoyoGames.UI
 
             if (elapsedTime < spawner.SprayDuration)
             {
-                float sprayTime = elapsedTime / spawner.SprayDuration;
-                float f = spawner.SprayCurve.Evaluate(sprayTime);
+                float t = elapsedTime / spawner.SprayDuration;
+                float f = spawner.SprayCurve.Evaluate(t);
 
-                transform.position = Vector2.Lerp(startPos, sprayPos, f);
+                transform.position = Vector2.LerpUnclamped(startPos, sprayPos, f);
             }
             else
             {
@@ -73,10 +83,13 @@ namespace RoyoGames.UI
                 float t = elapsedTime / spawner.MoveDuration;
                 float f = spawner.MoveCurve.Evaluate(t);
 
-                Vector2 pos = Vector2.Lerp(startPos, targetPos, f);
-                Vector2 springDir = spawner.SpringDirection == SpringDirections.Horizontal ? Vector2.right : Vector2.up;
+                Vector2 pos = Vector2.LerpUnclamped(startPos, targetPos, f);
 
-                pos += springDir * spawner.SpringCurve.Evaluate(t) * springAmplitude;
+                if(spawner.SpringDirection != SpringDirections.None)
+                {
+                    Vector2 springDir = spawner.SpringDirection == SpringDirections.Horizontal ? Vector2.right : Vector2.up;
+                    pos += springDir * spawner.SpringCurve.Evaluate(t) * springAmplitude;
+                }
 
                 transform.position = pos;
             }

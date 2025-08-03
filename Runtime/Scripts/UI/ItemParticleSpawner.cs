@@ -9,35 +9,28 @@ namespace RoyoGames.UI
     {
         [Header("Spawn Settings")]
         [SerializeField] private ItemParticleObject itemPrefab;
-        [SerializeField] private int maxSpawnCount = 20;
+        [SerializeField] private int maxSpawnCount = 30;
         [SerializeField] private float spawnDuration = 0.7f;
         [SerializeField] private float spawnRadius = 0;
 
         [Header("Spray Animation Settings")]
         [SerializeField] private SprayDirections sprayDirection = SprayDirections.Random;
         [SerializeField] private float sprayDuration = 0.5f;
-        [SerializeField] private float minSprayRadius = 100;
-        [SerializeField] private float maxSprayRadius = 150;
+        [SerializeField] private float minSprayRadius = 200;
+        [SerializeField] private float maxSprayRadius = 250;
         [SerializeField] private float sprayConeAngle = 90;
-
-        [SerializeField]
-        private AnimationCurve sprayCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+        [SerializeField] private CurveType sprayCurveType = CurveType.OutQuad;
+        [SerializeField] private AnimationCurve sprayCurve;
 
         [Header("Move Animation Settings")]
         [SerializeField] private float moveDuration = 0.5f;
-        [SerializeField] private SpringDirections springDirection;
-
-        [SerializeField]
-        private AnimationCurve springCurve = new AnimationCurve(
-            new Keyframe(0, 0, 0, 5),
-            new Keyframe(0.5f, 1, 0, 0),
-            new Keyframe(1, 0, -5, 0));
-
+        [SerializeField] private CurveType moveCurveType = CurveType.InQuad;
+        [SerializeField] private AnimationCurve moveCurve;
+        [SerializeField] private SpringDirections springDirection = SpringDirections.None;
+        [SerializeField] private CurveType springCurveType = CurveType.HalfSine;
+        [SerializeField] private AnimationCurve springCurve;
         [SerializeField] private float minSpringAmplitude = 0;
         [SerializeField] private float maxSpringAmplitude = 0;
-
-        [SerializeField]
-        private AnimationCurve moveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
         public SprayDirections SprayDirection
         {
@@ -69,6 +62,19 @@ namespace RoyoGames.UI
             set => sprayConeAngle = value;
         }
 
+        public CurveType SprayCurveType
+        {
+            get => sprayCurveType;
+            set
+            {
+                if (sprayCurveType != value)
+                {
+                    sprayCurve = AnimationCurveCreator.Create(value);
+                    sprayCurveType = value;
+                }
+            }
+        }
+
         public AnimationCurve SprayCurve
         {
             get => sprayCurve;
@@ -87,6 +93,19 @@ namespace RoyoGames.UI
             set => springDirection = value;
         }
 
+        public CurveType SpringCurveType
+        {
+            get => springCurveType;
+            set
+            {
+                if (springCurveType != value)
+                {
+                    springCurve = AnimationCurveCreator.Create(value);
+                    springCurveType = value;
+                }
+            }
+        }
+
         public AnimationCurve SpringCurve
         {
             get => springCurve;
@@ -103,6 +122,19 @@ namespace RoyoGames.UI
         {
             get => maxSpringAmplitude;
             set => maxSpringAmplitude = value;
+        }
+
+        public CurveType MoveCurveType
+        {
+            get => moveCurveType;
+            set
+            {
+                if (moveCurveType != value)
+                {
+                    moveCurve = AnimationCurveCreator.Create(value);
+                    moveCurveType = value;
+                }
+            }
         }
 
         public AnimationCurve MoveCurve
@@ -132,6 +164,7 @@ namespace RoyoGames.UI
 
         public enum SpringDirections
         {
+            None,
             Horizontal,
             Vertical
         }

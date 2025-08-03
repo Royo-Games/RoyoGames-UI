@@ -122,7 +122,6 @@ GameObject:
   - component: {fileID: 2812592061717038909}
   - component: {fileID: 5846956421246198152}
   - component: {fileID: 2040394356653936835}
-  - component: {fileID: 3116244086207964786}
   - component: {fileID: 4963939189631755251}
   m_Layer: 5
   m_Name: UI Panel
@@ -171,28 +170,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!95 &3116244086207964786
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5634563734918037879}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d170246fe441d9e4090c796eb01a5213, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 2
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &4963939189631755251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,10 +183,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editMode: 0
-  showTrigger: FadeIn
-  showSpeed: 1
-  hideTrigger: FadeOut
-  hideSpeed: 1
+  showAnimation: {fileID: 11400000, guid: 58e3709f8d2af114d9a14e3a8a0045c9, type: 2}
+  hideAnimation: {fileID: 11400000, guid: 461230e4f040be64c915a695ca03dd26, type: 2}
   onBeginShow:
     m_PersistentCalls:
       m_Calls: []

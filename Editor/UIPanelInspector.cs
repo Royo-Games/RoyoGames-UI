@@ -1,79 +1,57 @@
 using UnityEditor;
-using UnityEditor.Animations;
 using UnityEngine;
-using System.Collections.Generic;
 
 [CustomEditor(typeof(UIPanel))]
 public class UIPanelInspector : Editor
 {
     private UIPanel panel;
 
-    private StringArrayPopupProperty showTriggerProperty;
-    private StringArrayPopupProperty hideTriggerProperty;
+    private SerializedProperty showAnimationProperty;
+    private SerializedProperty hideAnimationProperty;
+    private SerializedProperty editModeProperty;
+    private SerializedProperty eventsShowProperty;
+    private SerializedProperty onBeginShowProperty;
+    private SerializedProperty onEndShowProperty;
+    private SerializedProperty onBeginHideProperty;
+    private SerializedProperty onEndHideProperty;
 
     private void OnEnable()
     {
         panel = target as UIPanel;
-        InitTriggerProperties();
+        showAnimationProperty = serializedObject.FindProperty("showAnimation");
+        hideAnimationProperty = serializedObject.FindProperty("hideAnimation");
+        editModeProperty = serializedObject.FindProperty("editMode");
+        eventsShowProperty = serializedObject.FindProperty("eventsShow");
+        onBeginShowProperty = serializedObject.FindProperty("onBeginShow");
+        onEndShowProperty = serializedObject.FindProperty("onEndShow");
+        onBeginHideProperty = serializedObject.FindProperty("onBeginHide");
+        onEndHideProperty = serializedObject.FindProperty("onEndHide");
     }
-    private void InitTriggerProperties()
-    {
-        Animator animator = panel.GetComponent<Animator>();
-        RuntimeAnimatorController runtimeAnimatorController = animator.runtimeAnimatorController;
-        AnimatorController animatorController = runtimeAnimatorController as AnimatorController;
 
-        if (animatorController == null)
-        {
-            AnimatorOverrideController overrideController = runtimeAnimatorController as AnimatorOverrideController;
-            if (overrideController != null)
-                animatorController = overrideController.runtimeAnimatorController as AnimatorController;
-        }
-
-        List<string> trigerList = new();
-
-        if (animatorController != null)
-        {
-            foreach (var parameter in animatorController.parameters)
-            {
-                if (parameter.type == AnimatorControllerParameterType.Trigger)
-                    trigerList.Add(parameter.name);
-            }
-        }
-
-        string[] triggerArray = trigerList.ToArray();
-
-        showTriggerProperty = new StringArrayPopupProperty(triggerArray, panel.ShowTriggerName);
-        hideTriggerProperty = new StringArrayPopupProperty(triggerArray, panel.HideTriggerName);
-    }
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
+        EditorGUILayout.PropertyField(showAnimationProperty);
+        EditorGUILayout.PropertyField(hideAnimationProperty);
+
+
         EditorGUI.BeginChangeCheck();
 
-        panel.ShowTriggerName = showTriggerProperty.DrawLayout("Show Trigger");
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("showSpeed"));
-
+        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(editModeProperty);
         EditorGUILayout.Space();
 
-        panel.HideTriggerName = hideTriggerProperty.DrawLayout("Hide Trigger");
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("hideSpeed"));
-
-        EditorGUILayout.Space();
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("editMode"));
-        EditorGUILayout.Space();
-
-        var eventsShowProperty = serializedObject.FindProperty("eventsShow");
         eventsShowProperty.boolValue = UIDraw.DrawOpenerHeader("Events", eventsShowProperty.boolValue);
 
         if (eventsShowProperty.boolValue)
         {
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("onBeginShow"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("onEndShow"));
+            EditorGUILayout.PropertyField(onBeginShowProperty);
+            EditorGUILayout.PropertyField(onEndShowProperty);
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("onBeginHide"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("onEndHide"));
+            EditorGUILayout.PropertyField(onBeginHideProperty);
+            EditorGUILayout.PropertyField(onEndHideProperty);
         }
 
         serializedObject.ApplyModifiedProperties();

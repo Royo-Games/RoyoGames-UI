@@ -18,12 +18,12 @@ public class UIPanel : MonoBehaviour
     public UIPanelState State => state;
     public bool IsShow => state == UIPanelState.BeginShow || state == UIPanelState.EndShow;
 
-    public TweenAnimation ShowAnimation
+    public UIPanelAnimation ShowAnimation
     {
         get { return showAnimation; }
         set { showAnimation = value; }
     }
-    public TweenAnimation HideAnimation
+    public UIPanelAnimation HideAnimation
     {
         get { return hideAnimation; }
         set { hideAnimation = value; }
@@ -40,8 +40,8 @@ public class UIPanel : MonoBehaviour
     private UIPanelState state;
 
     [SerializeField] private bool editMode;
-    [SerializeField] private TweenAnimation showAnimation;
-    [SerializeField] private TweenAnimation hideAnimation;
+    [SerializeField] private UIPanelAnimation showAnimation;
+    [SerializeField] private UIPanelAnimation hideAnimation;
 
     [SerializeField][HideInInspector] private UnityEvent onBeginShow;
     [SerializeField][HideInInspector] private UnityEvent onEndShow;
